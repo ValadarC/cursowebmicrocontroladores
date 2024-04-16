@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<title>CSS3. Gradiantes, sombreados y bordes</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 40px;
+			background: url(Imagenes/fondo.jpg);
+		}
+
+		div {
+			color: black;
+			font-size: 2em;
+			margin: 10px;
+			padding: 5px;
+			border-radius: 20px;
+		}
+
+		#divRGBA {
+			background-color: rgba(252, 241, 90, 0.5);
+		}
+
+		#divHSL {
+			background-color: hsl(20, 96%, 66%);
+		}
+
+		#divHSLA {
+			background-color: hsla(20, 96%, 66%, .5);
+		}
+
+		#divGradianteLinear {
+			background: -webkit-linear-gradient(hsla(20, 96%, 66%, .5), white);
+			background: -moz-linear-gradient(hsla(20, 96%, 66%, .5), white);
+			background: -o-linear-gradient(hsla(20, 96%, 66%, .5), white);
+			background: linear-gradient(hsla(20, 96%, 66%, .5), white);
+			/* El siguiente ejemplo marcaría el gradiante desde arriba
+	a la izquierda hasta abajo a la derecha */
+			/*background: linear-gradient(to bottom right,hsla(20,96%,66%,.5), white);*/
+		}
+
+		#divGradianteRadial {
+			background: -webkit-radial-gradient(hsla(20, 96%, 66%, .5), white);
+			background: -moz-radial-gradient(hsla(20, 96%, 66%, .5), white);
+			background: -o-radial-gradient(hsla(20, 96%, 66%, .5), white);
+			background: radial-gradient(hsla(20, 96%, 66%, .5), white)
+		}
+
+		#divBrillo {
+			background: black;
+			color: white;
+			text-shadow:
+				0px 0px 20px rgba(0, 255, 0, 1),
+				0px 0px 20px rgba(0, 255, 0, 1),
+				0px 0px 20px rgba(0, 255, 0, 1);
+		}
+
+		#divTexto3D {
+			background: black;
+			color: white;
+			text-shadow:
+				1px 1px 0px rgba(230, 230, 230, 1),
+				2px 2px 0px rgba(200, 200, 200, 1),
+				3px 3px 0px rgba(180, 180, 180, 1),
+				4px 4px 0px rgba(160, 160, 160, 1);
+		}
+
+		div:hover {
+			-moz-box-shadow: 3px 3px 2px hsla(0, 0%, 0%, .3);
+			-webkit-box-shadow: 3px 3px 2px hsla(0, 0%, 0%, .3);
+			box-shadow: 3px 3px 2px hsla(0, 0%, 0%, .3);
+			text-shadow: 3px 1px 1px hsla(0, 0%, 100%, .8);
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="divRGBA">
+		<p>Texto de muestra</p>
+	</div>
+	<div id="divHSL">
+		<p>Texto de muestra</p>
+	</div>
+	<div id="divHSLA">
+		<p>Texto de muestra</p>
+	</div>
+	<div id="divGradianteLinear">
+		<p>Texto de muestra</p>
+	</div>
+	<div id="divGradianteRadial">
+		<p>Texto de muestra</p>
+	</div>
+	<div id="divBrillo">
+		<p>¡¡¡BRILLO!!!</p>
+	</div>
+	<div id="divTexto3D">
+		<p>TEXTO EN 3D</p>
+	</div>
+</body>
+
+</html>

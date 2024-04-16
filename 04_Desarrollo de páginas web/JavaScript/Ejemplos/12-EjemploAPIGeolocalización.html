@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>API de Geolocalización</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <button>Geolocalizar</button>
+    <p></p>
+    <script>
+        // Las Interfaces de Programacion de Aplicaciones (APIs por sus siglas en inglés) son construcciones disponibles en los lenguajes de programación que permiten a los desarrolladores 
+        // crear funcionalidades complejas de una manera simple. Estas abstraen el código más complejo en clases para proveer una sintaxis más fácil de usar en su lugar.
+        // Las APIs de navegador están integradas en tu navegador web y pueden exponer datos del navegador y del entorno informático circundante y hacer cosas complejas y útiles con él. 
+        // Por ejemplo, la API de Geolocalización proporciona algunas construcciones simples de JavaScript para obtener datos de ubicación con los que, por ejemplo, trazar tu ubicación en un mapa de Google. 
+        // Realmente, el navegador está haciendo uso de códigos de bajo nivel para comunicarse con el hardware GPS del dispositivo (o lo que esté disponible para determinar los datos de posición), 
+        // recuperar datos de posición y devolverlos al entorno del navegador para su uso en tu código. Pero una vez más, la API se encarga de abstraer esta complejidad.
+        // API Geolocation de JavaScript
+        // Tiene métodos para monitorizar la geolocalización, tanto la actual como la futura si el usuario se desplaza
+        // Estos métodos permiten acceder a sus coordenadas y a otros datos como la velocidad de desplazamiento, la dirección del movimiento o la altitud
+        // https://developer.mozilla.org/es/docs/Learn/JavaScript/Client-side_web_APIs/Introduction
+
+        const boton = document.querySelector('button');
+        const mensaje = document.querySelector('p');
+
+        const geolocalizar = () => {
+            // navigator es un objeto que nos permite a acceder a información del navegador del usuario, como si tiene acceso a los dispositivos media, el sistema en el que se está ejecutando...
+            // navigator.geolocation nos permite acceder a la geolocalización que ofrece el navegador. Devuelve un objeto de tipo Geolocation. Si no lo devuelve, es que el navegador
+            // no tiene acceso a la geolocalización.
+            if (navigator.geolocation) { // Si el navegador puede geolocalizar
+                navigator.geolocation.getCurrentPosition(muestraPosicion); // getCurrentPosition captura la información de geolocalización del usuario y pide como argumento una función para ejecutar para aprovechar la geolocalización. A esto de pasar una función como argumento para que se ejecute se le llama función callback
+                navigator.geolocation.watchPosition(muestraPosicion); // watchPosition vigila nuestro movimiento para poder reaccionar. Utilizamos la misma función callback para renovar la información de la posición.
+                // Con la combinación de ambos métodos tendríamos la información necesaria para mostrar en un mapa nuestra posición en tiempo real
+            } else {
+                mensaje.textContent = 'Tu navegador no permite geolocalizar';
+            }
+        }
+
+        const muestraPosicion = (posicion) => { // posición es un objeto de tipo Position. A su vez, Position tiene un objeto de tipo coords con sus coordenadas
+            mensaje.textContent = posicion.coords.latitude + ',' + posicion.coords.longitude +',' + posicion.coords.accuracy;
+        }
+
+        boton.addEventListener('click', geolocalizar);
+    </script>
+</body>
+
+</html>

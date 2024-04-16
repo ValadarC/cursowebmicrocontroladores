@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <style rel="stylesheet">
+        .imagenes {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row" id="galeria">
+        <!-- <div class="col-4">
+            <img class="img-fluid imagenes"src="https://cdn.pixabay.com/photo/2018/02/01/14/09/field-3123271_1280.jpg" alt="flores en el campo" >
+        </div> -->
+    </div>
+
+    <div id ="carouselPrincipal" class="carousel slide" data-bs-ride="carousel">
+        <div id="carrosel" class="carousel-inner">
+            <!-- <div class="carousel-item active">
+            <img src="..." class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="..." class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="..." class="d-block w-100" alt="...">
+          </div> -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPrincipal"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselPrincipal"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+<script>
+    const imagenes = [
+        { src: "https://media.istockphoto.com/id/1489790715/es/foto/prados-y-caba%C3%B1as-r%C3%BAsticas-de-piedra-en-hermoso-valle-verde.jpg?s=2048x2048&w=is&k=20&c=dEZ8MrozqHi_K7pCJVtMaWeZADBxivORSmswRfHIut4=", alt: "Paisaje verde nublado" },
+        { src: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg", alt: "Amanecer color morado a través de un arbol" },
+        { src: "https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072821_1280.jpg", alt: "paisaje de otoño en un bosque" },
+        { src: "https://cdn.pixabay.com/photo/2018/06/09/17/25/trees-3464777_1280.jpg", alt: "Dibujo de un bosque" },
+        { src: "https://cdn.pixabay.com/photo/2014/01/22/19/44/flower-field-250016_1280.jpg", alt: "campo arcoiris" },
+        { src: "https://cdn.pixabay.com/photo/2018/02/01/14/09/field-3123271_1280.jpg", alt: "flores en el campo" }
+    ];
+    console.log(imagenes)
+    const filaRow = document.querySelector('#galeria');
+
+    imagenes.forEach(imagenDatos => {
+    console.log(imagenDatos)
+        //1º -> Tenemos que crear un div por cada imagen de class col-4
+        const columna = document.createElement('div');
+        columna.classList.add('col-4');
+        columna.classList.add('mt-2');
+
+        //2º -> Ahora , tenemos que crear una imagen , asignarle los valores src y alt, la clase img-fluid y imagen
+        const nuevaImagen = document.createElement('img');
+        nuevaImagen.src = imagenDatos.src;
+        nuevaImagen.alt = imagenDatos.alt;
+        nuevaImagen.classList.add('img-fluid');
+        nuevaImagen.classList.add('imagenes');
+
+        //3º -> Ahora tenemos que añadir nuevaImagen a columna
+        columna.appendChild(nuevaImagen);
+
+        //4º -> Finalmente tenemos que añadir columna a la filaRow (que la hemos inicializado antes del bucle)
+        filaRow.appendChild(columna);
+
+    });
+
+
+    // <div id="carrosel" class="carousel-inner">
+    //     <div class="carousel-item active">
+    //         <img src="..." class="d-block w-100" alt="...">
+    //     </div>
+
+    //     <div class="carousel-item">
+    //         <img src="..." class="d-block w-100" alt="...">
+    //     </div>
+
+    //     <div class="carousel-item">
+    //         <img src="..." class="d-block w-100" alt="...">
+    //     </div>
+    // </div>
+
+    let primerFor = true;
+
+    const carroselDiv = document.querySelector('#carrosel');
+    imagenes.forEach(imagenDatos => {
+        //1º -> Tenemos que crear un div 
+        const div = document.createElement('div');
+
+        //2º -> Al div añadimos la clase  carousel-item
+        div.classList.add('carousel-item');
+
+        //3º -> si es el primerfor, añadimos la clase active
+        if (primerFor) {
+            div.classList.add('active');
+            primerFor = false;
+        }
+
+        //4º -> Creamos una etiqueta img
+        const imagenCarrusel = document.createElement('img')
+
+        //5º -> añadimos a esa imagen las clases d-block w-100
+        imagenCarrusel.classList.add("d-block");
+        imagenCarrusel.classList.add("w-100");
+
+        //6º -> Ahora establecemos los valores src y alt de los datos
+        imagenCarrusel.src = imagenDatos.src;
+        imagenCarrusel.alt = imagenDatos.alt;
+
+        //7º -> Ahora añadimos la imagen al div que hemos creado en el for
+        div.appendChild(imagenCarrusel);
+
+        //8º -> Ahora añadimos el div donde hemos insertado la foto al div con id="carrosel"
+        carroselDiv.appendChild(div);
+
+    });
+</script>
+</body>
+</html>

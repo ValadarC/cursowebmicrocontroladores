@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 7</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+        #lista{
+            text-align: center;
+            /* margin-left: 85px; */
+            margin: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ENUNCIADO  -->
+    <!-- Instrucciones: Se realizará una página web básica con la estructura fundamental.
+
+    • Desarrollar una página web con una estructura básica de HTML importando los estilos Bootstrap.
+    • Incluir una lista desplegable con los valores geográficos de la url:
+        ◦ https://www.themealdb.com/api/json/v1/1/list.php?a=list
+    • Al cambiar el valor de la lista, mostrar en una tabla las recetas de cocina de ese lugar desde la url:
+        ◦ https://www.themealdb.com/api/json/v1/1/filter.php?a=italian
+        ◦ italian será el valor seleccionado de la lista.
+    • Convertir la tabla en una tabla interactiva mediante la utilización del componente Datatable. -->
+
+    <!-- Ponemos en el html el código:
+        <select class="form-select" aria-label="Elige un país de la lista">
+        <option selected>Elige uno</option>
+        </select>
+
+        En el evento DOMContentLoaded hacemos la petición fetch a la url de las zonas geográficas
+        document.addEventListener('DOMContentLoaded', () => {
+            // bloque try/catch del fetch. Una vez obtenemos los datos, llamamos a una función que itere los datos (datos.meals) y por cada uno:
+            // crear un option cuyo value sea x.strArea y su textcontent también
+            });
+        En la lista, debemos desarrollar el evento change (x.target.value) será el valor elegido de la lista
+        En la función que desarrollemos lo que va a hacer el evento, debemos recoger x.target.value
+        y hacer la petición a: https://www.themealdb.com/api/json/v1/1/filter.php?a=italian donde "italian" será el x.target.value
+        Una vez obtenemos los datos, creamos una tabla o cards con el nombre del plato (strMeal) y su imagen (strMealThumb) -->
+
+
+
+    <!-- Comienzo de la actividad -->
+
+    <!-- Dropdown  -->
+    <div class="container">
+        <select class="form-select" aria-label="Elige un país de la lista">
+            <option onchange="obtenerDatosAPI()" id="selector" selected>Elige uno</option>
+        </select>
+
+        <div id="lista" class="row"></div>
+        <!-- Cards
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div> -->
+
+      
+
+    </div>
+
+    <script>
+        const contenido = document.querySelector('.form-select');
+
+        // Parte 1
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const respuesta = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+                const datos = await respuesta.json();
+                console.log(datos);
+                mostrarHTMLAPI(datos);
+            } catch (error) {
+                console.log(error)
+            }
+
+            console.log('Se ha cargado la web');
+        });
+
+
+        const mostrarHTMLAPI = (datos) => {
+            let html = '';
+            const paises = datos.meals;
+            paises.forEach(perfil => {
+                const { strArea } = perfil;
+                html += `
+                    <option value="${strArea}">${strArea}</option>
+                `
+            });
+
+            contenido.innerHTML = html;
+        }
+
+        // Parte 2 
+
+        const obtenerDatosAPI = async () => {
+            const pais = contenido.value;
+            console.log(pais);
+            try {
+                const respuesta = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${pais}`);
+                const resultado = await respuesta.json();
+                mostrarHTMLAPI2(resultado);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        const mostrarHTMLAPI2 = (datos) => {
+            const contenido = document.querySelector('#lista');
+            contenido.innerHTML = '';
+
+            const paises = datos.meals;
+            paises.forEach(perfil => {
+                const { strMeal, strMealThumb, idMeal } = perfil;
+                //////////////////
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.classList.add('col-4', 'mt-2');
+                card.style.width='18rem';
+                contenido.appendChild(card);
+                //////////////
+                const img=document.createElement('img');
+                img.src= `${strMealThumb}`;
+                img.classList.add('card-img-top');
+                img.alt='imagen comidas';
+                card.appendChild(img);
+                //////////////////
+                const cardSub = document.createElement('div');
+                cardSub.classList.add('card-body');
+                card.appendChild(cardSub);
+                ////////////////////////////
+                const nombre= document.createElement('h4');
+                nombre.classList.add('card-title');
+                nombre.textContent= `${strMeal}`;
+                cardSub.appendChild(nombre);
+                ///////////////////////////
+                const id= document.createElement('p');
+                id.classList.add('card-text');
+                id.textContent= `ID: ${idMeal}`;
+                cardSub.appendChild(id);  
+            });
+
+        }
+
+       
+
+        contenido.addEventListener('change', obtenerDatosAPI);
+
+    </script>
+
+</body>
+
+</html>

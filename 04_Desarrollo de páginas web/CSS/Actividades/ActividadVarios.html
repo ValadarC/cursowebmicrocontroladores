@@ -1,0 +1,161 @@
+<!-- Hacer una web con una cabecera h1, un párrafo, una tabla y un formulario
+h1: Recuadrado, de un color de texto y con fondo gris
+párrafo: Con una imagen de fondo que ocupe todo el párrafo
+tabla: Primera fila: fondo negro y letra blanca. Borde azul de 10 px. Al pasar por encima el ratón cambiar el cursor y el color de fondo de la fila
+formulario: Todos los label de color rojo. los inputs con borde superior e inferior verde y con padding de 10px
+Imagen: Agregar una imagen cualquiera, con ancho de 400px * 400 px. Una vez se consiga, convertirla en imagen circular-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad CSS Varios</title>
+
+    <style type="text/css">
+        h1 {
+            background-color: grey;
+            color: orangered;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            border-color: solid orangered;
+        }
+
+        p {
+            background-image: url("../Imagenes/mando.jpg");
+            background-repeat: repeat;
+            background-position: top left;
+            background-size: cover;
+        }
+        table{
+            width: 100%;
+        }
+        th {
+            background-color: black;
+            color: white;
+            border: 5px solid blue;
+        }
+        table:hover {
+            background-color: olivedrab;
+            cursor: pointer;
+            cursor: url('../Imagenes/favicon.ico'), auto; 
+        }
+        label{
+            background-color: red;
+        }
+        input {
+            border-style: none;
+            padding: 10px;
+            border-top:5px solid greenyellow;
+            border-bottom:5px solid greenyellow;
+        }
+       img {
+        border-radius: 50%;
+       }
+    </style>
+
+</head>
+
+<body>
+    <h1>Actividad CSS Varios</h1>
+    <p>Hacer una web con una cabecera h1, un párrafo, una tabla y un formulario
+        h1: Recuadrado, de un color de texto y con fondo gris
+        párrafo: Con una imagen de fondo que ocupe todo el párrafo
+        tabla: Primera fila: fondo negro y letra blanca. Borde azul de 10 px. Al pasar por encima el ratón cambiar el
+        cursor y el color de fondo de la fila
+        formulario: Todos los label de color rojo. los inputs con borde superior e inferior verde y con padding de 10px
+        Imagen: Agregar una imagen cualquiera, con ancho de 400px * 400 px. Una vez se consiga, convertirla en imagen
+        circular
+        As the first ever Star Wars live action series, The Mandalorian opened a new realm of storytelling in the Star
+        Wars galaxy.
+
+        With a starring cast including Pedro Pascal, Gina Carano, Giancarlo Esposito, Emily Swallow, Carl Weathers, Omid
+        Abtahi, and Werner Herzog, the unprecedented series made its world debut with the release of Disney+ in November
+        of 2019.
+
+        The Mandalorian was written and executive produced by Emmy-nominated producer and actor Jon Favreau. Lucasfilm
+        veteran Dave Filoni (Star Wars: The Clone Wars, Star Wars Rebels) directed the series premiere. Additional
+        episodic directors include Deborah Chow (Jessica Jones), Rick Famuyiwa (Dope), Bryce Dallas Howard (Solemates),
+        and Taika Waititi (Thor: Ragnarok).
+
+        THE STORY
+
+        Set between the fall of the Empire and the rise of the First Order, a lone mysterious gunfighter plies his trade
+        deep in the galaxy’s outer reaches far from the activity of the New Republic.
+
+        BOUNTY HUNTING IS A COMPLICATED PROFESSION…
+    </p>
+    <table>
+        <caption>Análisis de ventas anuales</caption>
+        <thead>
+            <tr>
+                <th rowspan="2">AÑO</th>
+                <th scope="col" colspan="4">Ventas totales</th>
+            </tr>
+            <tr>
+                <th scope="col">Producto A</th>
+                <th scope="col">Producto B</th>
+                <th scope="col">Producto C</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th colspan="4">Total</th>
+                <td>70</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <th scope="row">2020</th>
+                <td>8</td>
+                <td>9</td>
+                <td>4</td>
+                <td>21</td>
+            </tr>
+            <tr>
+                <th scope="row">2021</th>
+                <td>3</td>
+                <td>5</td>
+                <td>8</td>
+                <td>16</td>
+            </tr>
+            <tr>
+                <th scope="row">2022</th>
+                <td>4</td>
+                <td>4</td>
+                <td>7</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <th scope="row">2023</th>
+                <td>5</td>
+                <td>7</td>
+                <td>6</td>
+                <td>18</td>
+            </tr>
+        </tbody>
+    </table>
+    <form>
+        <label for="nombre">Nombre de producto:</label>
+        <input type="text" id="nombre" name="usuario_nombre" required placeholder="Nombre (obligatorio)">
+        <br>
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="producto_precio">
+        <br>
+        <label for="type">Categoria:</label>
+        <select name="categoria" id="type">
+            <option value="tech">Tecnología</option>
+            <option value="text" selected>Textil</option>
+        </select>
+        <br>
+        <input type="checkbox" id="valor" value="stock">
+        <label for="valor">Descatalogado</label>
+        <br>
+        <button type="submit">Agregar producto</button>
+    </form>
+
+    <img src="../Imagenes/mando.jpg" width=400px height=400px />
+
+</body>
+
+</html>

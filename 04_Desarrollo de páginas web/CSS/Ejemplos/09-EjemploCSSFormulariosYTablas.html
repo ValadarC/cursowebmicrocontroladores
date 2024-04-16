@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ejemplo de uso de selectores de tipo o etiqueta</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="./Imagenes/favicon.ico">
+    <!-- Crear un favicon es un paso pequeño, pero muy importante para configurar una página web comercial. 
+        Añade legitimidad al sitio y ayuda a impulsar la compañía de manera online, así como mejora la confianza de los potenciales consumidores. 
+        Es un marcador visual inmediato de la página web que permite una identificación fácil y rápida a los internautas; así como logra unificar 
+        todos los componentes del navegador en una misma experiencia de navegación de la compañía. Para el SEO no es importante.
+        El estándar es usar una imagen de 16x16, aunque si usamos otra también la encaja si bien su visualización puede que no sea la óptima. 
+    -->
+    <style type="text/css">
+        table {
+            width: 100%;
+        }
+
+        table,
+        th,
+        td {
+            /* border: 5px solid blue; */
+            border-width: 5px;
+            border-style: solid;
+            border-color: blue;
+        }
+
+        td {
+            border-bottom-color:greenyellow;
+        }
+
+        tr:hover {
+            background-color: lightgrey;
+            cursor: pointer;
+            /* cursor: url('./Imagenes/favicon.ico'), auto; */
+        }
+
+        th {
+            padding: 10px;
+            height: 70px;
+            font-size: 2em;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr td:last-child,
+        tr th:last-child {
+            text-align: right;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 50%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            border-width: 5px;
+            border-color: black;
+        }
+
+        input:hover,
+        textarea:hover,
+        select:hover {
+            border-color: red;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: green;
+            background-color: black;
+            color: white;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <table aria-label="Países del mundo">
+        <tr>
+            <th scope="col">País</th>
+            <th scope="col">Continente</th>
+            <th scope="col">Capital</th>
+            <th scope="col">Habitantes</th>
+        </tr>
+        <tr>
+            <td>España</td>
+            <td>Europa</td>
+            <td>Madrid</td>
+            <td>47000000</td>
+        </tr>
+        <tr>
+            <td>Portugal</td>
+            <td>Europa</td>
+            <td>Lisboa</td>
+            <td>10000000</td>
+        </tr>
+        <tr>
+            <td>Francia</td>
+            <td>Europa</td>
+            <td>Paris</td>
+            <td>67000000</td>
+        </tr>
+        <tr>
+            <td colspan="3">Suma de habitantes</td>
+            <td>124000000</td>
+        </tr>
+    </table>
+    <form>
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" required>
+        <br>
+        <label for="email">Introduce email de contacto</label>
+        <input type="email" id="email" required>
+        <br>
+        <label for="tipoerror">Elige el tipo de error que has visto</label>
+        <select id="tipoerror">
+            <option>Error de contenido</option>
+            <option>Error de accesibilidad</option>
+            <option>Error ortográfico</option>
+        </select>
+        <br>
+        <label for="descripcion">Describe el error</label>
+        <textarea id="descripcion"></textarea>
+        <br>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+
+</html>

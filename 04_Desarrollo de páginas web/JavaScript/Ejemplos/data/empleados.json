@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan",
+    "empresa": "Juan Luis SL",
+    "trabajo": "Desarrollador Web"
+  },
+  {
+    "id": 2,
+    "nombre": "Marta",
+    "empresa": "Juan Luis SL",
+    "trabajo": "Diseñadora"
+  },
+  {
+    "id": 3,
+    "nombre": "Pedro",
+    "empresa": "Juan Luis SL",
+    "trabajo": "Aplicaciones Móviles"
+  }
+]

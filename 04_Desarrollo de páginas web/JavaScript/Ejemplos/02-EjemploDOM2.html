@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Ejemplo de uso del DOM</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <h1>Queen</h1>
+  <p class="cursiva">Banda británica de rock formada en 1970 en Londres.</p>
+  <img src="https://indiehoy.com/wp-content/uploads/2020/10/queen.jpg" width="400" height="200" id="fotoGrupo"
+    alt="Fotografía de los componentes del grupo Queen" />
+  <h2 class="cursiva">Integrantes del grupo</h2>
+  <ul>
+    <li>Brian May</li>
+    <li>Freddie Mercury</li>
+    <li>John Deacon</li>
+    <li>Roger Taylor</li>
+  </ul>
+  <h2 class="cursiva">Discografía</h2>
+  <table aria-label="Grandes éxitos de Queen">
+    <tr>
+      <th scope="col">Año</th>
+      <th scope="col">Disco</th>
+    </tr>
+    <tr>
+      <td>1975</td>
+      <td>A Night at the Opera</td>
+    </tr>
+    <tr>
+      <td>1986</td>
+      <td>A Kind of Magic</td>
+    </tr>
+    <tr>
+      <td>1989</td>
+      <td>The Miracle</td>
+    </tr>
+    <tr>
+      <td colspan="2">"A Kind of Magic" fue el álbum más exitoso.</td>
+    </tr>
+  </table>
+  <h2 class="cursiva">Sitio web oficial</h2>
+  <a href="https://queenonline.com/" target="_blank">queenonline.com</a>
+  <br>
+  <h3>Regístrate para enviarte noticias del grupo</h3>
+  <form>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="usuario_nombre" required placeholder="Nombre (obligatorio)">
+    <br>
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="usuario_email" required placeholder="Email (obligatorio)">
+    <br>
+    <button type="submit">Registrarme</button>
+  </form>
+
+  <script>
+    // getElementsByTagName selecciona elementos por su etiqueta.
+    // getElementsByClassName selecciona elementos por su clase.
+    // getElementById selecciona un único elemento por su id.
+
+    // Así seleccionamos todos los elementos li
+    const elementosLi = document.getElementsByTagName('li');
+    console.log('Elementos li', elementosLi);
+
+    const elementosCursiva = document.getElementsByClassName('cursiva');
+    console.log('Elementos de clase cursiva', elementosCursiva);
+
+    const elementoDeIdFotoGrupo = document.getElementById('fotoGrupo');
+    console.log('Elemento con id fotoGrupo', elementoDeIdFotoGrupo);
+
+    // querySelector va a retornar un único elemento. Si hay múltiples coincidencias solo va a retornar el primero.
+    // querySelector utiliza la sintaxis de selector de CSS. A continuación, seleccionaremos con querySelector los mismos elementos que en los tres casos anteriores
+    const cabeceraH2QuerySelector = document.querySelector('h2');
+    const elementoCursivaQuerySelector = document.querySelector('.cursiva');
+    const elementoDeIdFotoGrupoQuerySelector = document.querySelector('#fotoGrupo');
+    console.log('Cabeceras h2', cabeceraH2QuerySelector);
+    console.log('Elementos de clase cursiva', elementoCursivaQuerySelector);
+    console.log('Elemento con id fotoGrupo', elementoDeIdFotoGrupoQuerySelector);
+
+    // querySelectorAll es igual que querySelector, pero selecciona todos los elementos
+    const elementosH2 = document.querySelectorAll('h2');
+    console.log('Todos los elementos h2', elementosH2);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Validaciones</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style type="text/css">
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-signin .checkbox {
+            font-weight: 400;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-signin input[type='email'] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type='password'] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+            <form class="form-signin">
+                <div class="form-group">
+                    <label for="email" class="sr-only my-2">Email</label>
+                    <input type="email" class="form-control" placeholder="Email" name="email" id="email" required
+                        autofocus />
+                    <small id="emailHelp" aria-live="polite" class="form-text text-danger" hidden>Introduzca un email
+                        válido</small>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="sr-only my-2">Password</label>
+                    <input type="password" class="form-control" placeholder="Contraseña" name="password" id="password"
+                        required />
+                    <small id="passwordHelp" class="form-text text-danger" hidden>Password obligatorio</small>
+                </div>
+                <div class="form-group mt-4">
+                    <button class="btn btn-lg btn-primary btn-block" id="btnLogin" type="submit" disabled>
+                        Login
+                    </button>
+                    <button class="btn btn-lg btn-secondary btn-block" id="btnReset" type="reset">
+                        Borrar datos
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        // Variables para controlar si el email y el password son válidos
+        let emailValido = false;
+        let passwordValido = false;
+
+        // Seleccionamos los elementos del formulario
+        const inputEmail = document.querySelector('#email');
+        const inputPassword = document.querySelector('#password');
+        const formulario = document.querySelector('.form-signin');
+        const btnSubmit = document.querySelector('#btnLogin');
+        const emailHelp = document.querySelector('#emailHelp');
+        const passwordHelp = document.querySelector('#passwordHelp');
+
+        // Asignamos eventos
+        inputEmail.addEventListener('input', validarEmail);
+        inputPassword.addEventListener('input', validarPassword);
+        formulario.addEventListener('submit', login);
+
+        function validarEmail(e) {
+            // e.target.value tiene el texto del input email
+            const vacio = estaVacio(e.target.value);
+            const emailOK = esEmail(e.target.value);
+            // Si el email está vacío o no es correcto mostramos el mensaje
+            if (vacio || !emailOK) {
+                emailHelp.hidden = false; // mostramos el mensaje de error
+                emailHelp.textContent = 'Introduzca un email válido';
+                emailValido = false;
+            } else {
+                emailHelp.hidden = true; // ocultamos el mensaje de error
+                emailHelp.textContent = '';
+                emailValido = true;
+            }
+            validarEnviar(); // chequeamos si el email y el password son correctos
+        }
+
+        function validarPassword(e) {
+            const vacio = estaVacio(e.target.value);
+            if (vacio) {
+                passwordHelp.hidden = false;
+                passwordHelp.textContent = 'Password obligatorio';
+                passwordValido = false;
+            } else {
+                passwordHelp.hidden = true;
+                passwordHelp.textContent = '';
+                passwordValido = true;
+            }
+            validarEnviar();
+        }
+
+        function estaVacio(texto) {
+            return texto.trim() === ''; // retornamos true si está vacío o false si no lo está
+        }
+
+        function esEmail(texto) {
+            // Los caracteres que aparecen abajo forma parte de lo que se llama una expresión regular
+            // La sintaxis de algunos campos (código postal, email, dni...) tienen una misma estructura
+            // Las expresiones regulares nos permiten examinar si un dato cumple con una determinada estructura
+            const regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+            const resultado = regex.test(texto); // comparamos la expresión regular con el texto mediante el método test
+            return resultado; // retornamos true si el texto es un email y false si no lo es
+        }
+
+        function validarEnviar() {
+            // Si el email es válido y el password es válido habilitamos el botón del login
+            // Si no es así lo deshabilitamos
+            if (emailValido && passwordValido) {
+                btnSubmit.disabled = false;
+            } else {
+                btnSubmit.disabled = true;
+            }
+        }
+
+        function login(e) {
+            // preventDefault anula la acción predeterminada del formulario
+            // En JavaScript moderno se anula este automatismo para poder manipular los formularios
+            // Normalmente, cuando tenemos un formulario será para enviar los datos a algún servidor
+            // e.preventDefault nos permite hacer un envío de datos personalizado, algo que veremos más adelante
+            e.preventDefault();
+            // Creamos una alerta
+            const alertaExito = document.createElement('small');
+            alertaExito.classList.add('form-text', 'text-success');
+            alertaExito.textContent = 'Datos enviados';
+            // Y la agregamos en la parte de abajo
+            formulario.appendChild(alertaExito);
+        }
+    </script>
+</body>
+
+</html>

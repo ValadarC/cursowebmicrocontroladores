@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Posicionamiento absoluto</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        #primero {
+            position: absolute;
+            width: 300px;
+            height: 140px;
+            top: 100px;
+            left: 30px;
+            background-color: orange;
+            color: #fff;
+            z-index: 2;
+        }
+
+        #segundo {
+            position: absolute;
+            width: 820px;
+            height: 30px;
+            background-color: lightblue;
+            top: 150px;
+            left: 10px;
+            z-index: 1;
+        }
+
+        #tercero {
+            position: absolute;
+            width: 100px;
+            background-color: lightblue;
+            bottom: 50px;
+            right: 10px;
+        }
+
+        #logo {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Los div con position absolute quedan fuera del flujo html. El flujo normal empezaría con el h1 que está a continuación-->
+    <h1>Posicionamiento CSS</h1>
+    <img id="logo" src="./Imagenes/favicon.ico" alt="logo" />
+    <div id="primero">
+        <p>Este div tiene posicionamiento absoluto.</p>
+        <p>Me permite especificar top y left para colocarlo con respecto a la esquina superior izquierda de la pantalla
+        </p>
+    </div>
+    <div id="segundo">
+        <p>Posicionamiento absoluto con z-index menor (el div aparece por debajo de otras que se superponen con z-index
+            mayor)</p>
+    </div>
+    <div id="tercero">
+        <p>Posicionamiento absoluto con atributos bottom y right. Distancia desde el borde de la pantalla</p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ejemplo de formulario con Bootstrap</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+    <h1>Regístrate</h1>
+    <form>
+        <div class="form-group mt-3">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="usuario_nombre" aria-describedby="ayuda" placeholder="Nombre (obligatorio)" required>
+            <small id="ayuda" class="form-text text-muted">Por ejemplo: Juan Luis</small>
+        </div>
+        <div class="form-group mt-3">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="usuario_email" placeholder="Email (obligatorio)" required>
+          </div>
+        <div class="form-group mt-3">
+            <label for="password">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="usuario_password" placeholder="Contraseña (obligatorio)" required>
+        </div>
+        <div class="form-group mt-3">
+            <label for="edad">Edad</label>
+            <input type="number" class="form-control" id="edad" name="usuario_edad" placeholder="Edad">
+        </div>
+        <div class="form-group mt-3">
+            <label for="genero"name="usuario_genero">Género</label>
+            <select class="form-select" id="genero">
+                <option value="hombre">Hombre</option>
+                <option value="mujer" selected>Mujer</option>
+            </select>
+        </div>
+        <fieldset class="mt-3">
+            <legend>Elija su forma de pago</legend>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="usuario_formapago" id="tarjeta" value="tarjeta" checked>
+                <label class="form-check-label" for="tarjeta">Tarjeta</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="usuario_formapago" id="paypal" value="paypal">
+                <label class="form-check-label" for="paypal">Paypal</label>
+            </div>
+        </fieldset>
+        <div class="form-group mt-3">
+            <label for="observaciones">Observaciones</label>
+            <textarea class="form-control" id="observaciones" name="usuario_observaciones" rows="3"></textarea>
+        </div>
+        <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" name="usuario_acuerdo" id="acuerdo">
+            <label class="form-check-label" for="acuerdo">
+                Estoy de acuerdo con las condiciones
+            </label>
+        </div>
+        <div class="my-3">
+            <button class="btn btn-primary" type="submit">Registrarme</button>
+            <button class="btn btn-secondary" type="reset">Borrar</button>
+        </div>
+    </form>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ejemplo de uso de selectores de tipo o etiqueta</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        body {
+            color: blue;
+        }
+
+        .impar {
+            font-size: x-large;
+            font-family: Arial;
+        }
+
+        .par {
+            font-size: large;
+            font-family: Arial;
+        }
+
+        #final {
+            font-weight: bold;
+            color: red;
+        }
+
+        p>a {
+            color: red;
+        }
+
+        img[alt="logo"] {
+            width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Cabecera 1</h1>
+    <p class="impar">Párrafo 1</p>
+    <p class="par">Párrafo 2</p>
+    <p class="impar">Párrafo 3</p>
+    <p class="par">Párrafo 4</p>
+    <p id="final">Último párrafo</p>
+    <p><a href="#">Link1</a></p>
+    <p><span><a href="#">Link2</a></span></p>
+    <img src="http://fernandosarachaga.com/wp-content/uploads/css3-logo.png" alt="logo css3" />
+</body>
+
+</html>

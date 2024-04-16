@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapas con Mapbox</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body>
+    
+<div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+    // TO MAKE THE MAP APPEAR YOU MUST
+    // ADD YOUR ACCESS TOKEN FROM
+    // https://account.mapbox.com
+    mapboxgl.accessToken = 'pk.eyJ1Ijoiamxwcm9mZXNvciIsImEiOiJjbHNhdHB3ZDEwNzNsMmpvNWxhMTRpNDNzIn0.b5FJ5Uz1mF4oCXB2YbTCJQ';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/satellite-streets-v11', // style URL
+        center: [-1.6335837, 42.823014], // starting position [lng, lat]
+        zoom: 14, // starting zoom
+    });
+</script>
+</body>
+</html>

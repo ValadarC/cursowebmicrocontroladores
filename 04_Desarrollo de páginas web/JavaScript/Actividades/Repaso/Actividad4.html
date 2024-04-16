@@ -1,0 +1,196 @@
+<!--• Crear una estructura básica de una página HTML importando los estilos Bootstrap.
+    • Desarrollar un formulario para introducir imágenes con estas características:
+        ◦ Nombre (obligatorio)
+        ◦ Url (obligar a que sea una url)
+        ◦ Tema (obligatorio)
+        ◦ Botón submit Guardar
+    • Mostrar información de errores en la introducción de los datos y no dejar efectuar el envío si los datos no están bien introducidos.
+
+    Objetivos: Identificar los métodos, la estructura del DOM y los eventos con el objetivo de aplicar cambios a una web.
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+     <title>Actividad Repaso 4</title>
+     <style type="text/css">
+         .form-signin {
+             width: 100%;
+             max-width: 330px;
+             padding: 15px;
+             margin: auto;
+         }
+ 
+         .form-signin .checkbox {
+             font-weight: 400;
+         }
+ 
+         .form-signin .form-control {
+             position: relative;
+             box-sizing: border-box;
+             height: auto;
+             padding: 10px;
+             font-size: 16px;
+         }
+ 
+         .form-signin .form-control:focus {
+             z-index: 2;
+         }
+ 
+         .form-signin input[type='email'] {
+             margin-bottom: -1px;
+             border-bottom-right-radius: 0;
+             border-bottom-left-radius: 0;
+         }
+ 
+         .form-signin input[type='password'] {
+             margin-bottom: 10px;
+             border-top-left-radius: 0;
+             border-top-right-radius: 0;
+         }
+     </style>
+ </head>
+ 
+ <body>
+     <div class="container">
+         <div class="text-center">
+             <h1 class="display-1 mb-3 font-weight-normal">IMAGENES</h1>
+             <form class="form-signin">
+                 <div class="form-group">
+                     <label for="nombre" class="sr-only my-2">Nombre</label>
+                     <input type="text" class="form-control" placeholder="Nombre" name="nombre" id="nombre" required
+                         autofocus />
+                     <small id="nombreHelp" class="form-text text-danger" hidden>nombre obligatorio</small>
+                 </div>
+                 <div class="form-group">
+                     <label for="imagen" class="sr-only my-2">Imagen</label>
+                     <input type="url" class="form-control" placeholder="Url Imagen" name="imagen" id="url"
+                         required />
+                     <small id="urlHelp" class="form-text text-danger" hidden>url obligatorio</small>
+                 </div>
+                 <div class="form-group">
+                     <label for="tema" class="sr-only my-2">Tema</label>
+                     <input type="text" class="form-control" placeholder="Tema" name="tema" id="tema" required />
+                     <small id="temaHelp" class="form-text text-danger" hidden>Tema obligatorio</small>
+                 </div>
+                 <div class="form-group mt-4">
+                     <button class="btn btn-lg btn-primary btn-block" id="btnGuardar" type="submit" disabled>
+                         Guardar
+                     </button>
+                     <button class="btn btn-lg btn-secondary btn-block" id="btnReset" type="reset">
+                         Borrar datos
+                     </button>
+                 </div>
+             </form>
+         </div>
+     </div>
+     <script>
+         // Variables para controlar si la url es válida
+         let nombreValido = false;
+         let urlValido = false;
+         let temaValido = false;
+ 
+         // Seleccionamos los elementos del formulario
+         const inputNombre = document.querySelector('#nombre');
+         const inputUrl = document.querySelector('#url');
+         const inputTema = document.querySelector('#tema');
+         const formulario = document.querySelector('.form-signin');
+         const btnSubmit = document.querySelector('#btnGuardar');
+         const nombreHelp = document.querySelector('#nombreHelp');
+         const urlHelp = document.querySelector('#urlHelp');
+         const temaHelp = document.querySelector('#temaHelp');
+ 
+         // Asignamos eventos
+         inputNombre.addEventListener('input', validarNombre);
+         inputUrl.addEventListener('input', validarUrl);
+         inputTema.addEventListener('input', validarTema);
+         formulario.addEventListener('submit', guardar);
+ 
+         function validarNombre(e) {
+             const vacio = estaVacio(e.target.value);
+             if (vacio) {
+                 nombreHelp.hidden = false;
+                 nombreHelp.textContent = 'Nombre obligatorio';
+                 nombreValido = false;
+             } else {
+                 nombreHelp.hidden = true;
+                 nombreHelp.textContent = '';
+                 nombreValido = true;
+             }
+             validarEnviar();
+         }
+ 
+         function validarUrl(e) {
+             // e.target.value tiene el texto del input url
+             const vacio = estaVacio(e.target.value);
+             const urlOK = esUrl(e.target.value);
+             // Si la url está vacía o no es correcta mostramos el mensaje
+             if (vacio || !urlOK) {
+                 urlHelp.hidden = false; // mostramos el mensaje de error
+                 urlHelp.textContent = 'Introduzca una Url válida';
+                 urlValido = false;
+             } else {
+                 urlHelp.hidden = true; // ocultamos el mensaje de error
+                 urlHelp.textContent = '';
+                 urlValido = true;
+             }
+             validarEnviar(); // chequeamos si la url es correcta
+         }
+ 
+         function validarTema(e) {
+             const vacio = estaVacio(e.target.value);
+             if (vacio) {
+                 temaHelp.hidden = false;
+                 temaHelp.textContent = 'Tema obligatorio';
+                 temaValido = false;
+             } else {
+                 temaHelp.hidden = true;
+                 temaHelp.textContent = '';
+                 temaValido = true;
+             }
+             validarEnviar();
+         }
+ 
+         function estaVacio(texto) {
+             return texto.trim() === ''; // retornamos true si está vacío o false si no lo está
+         }
+ 
+         function esUrl(texto) {
+             // Los caracteres que aparecen abajo forma parte de lo que se llama una expresión regular
+             // La sintaxis de algunos campos (código postal, email, dni...) tienen una misma estructura
+             // Las expresiones regulares nos permiten examinar si un dato cumple con una determinada estructura
+             const regex = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+             const resultado = regex.test(texto); // comparamos la expresión regular con el texto mediante el método test
+             return resultado; // retornamos true si el texto es un email y false si no lo es
+         }
+ 
+         function validarEnviar() {
+             // Si los tres campos son válidos, habilitamos el botón del login
+             // Si no es así lo deshabilitamos
+             if (nombreValido && urlValido && temaValido) {
+                 btnSubmit.disabled = false;
+             } else {
+                 btnSubmit.disabled = true;
+             }
+         }
+ 
+         function guardar(e) {
+             // preventDefault anula la acción predeterminada del formulario
+             // En JavaScript moderno se anula este automatismo para poder manipular los formularios
+             // Normalmente, cuando tenemos un formulario será para enviar los datos a algún servidor
+             // e.preventDefault nos permite hacer un envío de datos personalizado, algo que veremos más adelante
+             e.preventDefault();
+             // Creamos una alerta
+             const alertaExito = document.createElement('small');
+             alertaExito.classList.add('form-text', 'text-success');
+             alertaExito.textContent = 'Datos enviados';
+             // Y la agregamos en la parte de abajo
+             formulario.appendChild(alertaExito);
+         }
+     </script>
+ </body>
+ 
+ </html>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ejemplo de colisión de estilos</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        body {
+            background-image: url(./Imagenes/fondo.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            font-weight: bold;
+        }
+
+        p {
+            font-family: Arial;
+            /* font-family: Arial !important; */
+        }
+
+        .destacadoRojo {
+            color: red;
+        }
+
+        #azul {
+            color: blue;
+        }
+
+        .grande {
+            font-size: large;
+            font-size: xx-large;
+        }
+
+        #parrafoGrande {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Colisión de estilos CSS</h1>
+    <p>Este párrafo está en negrita porque hereda esta característica del body. Tiene el tipo de letra arial porque
+        todos los párrafos tienen este estilo según el selector de etiqueta</p>
+    <p style="font-family:'Segoe UI';font-weight: normal;">Este párrafo tiene unos estilos propios en una propiedad
+        style,luego se da prioridad a estos frente a otros que le podrían afectar. Pero si en otro selector
+        especificamos una propiedad
+        con important que colisiona con el selector de línea, se aplicará ese.</p>
+    <p class="destacadoRojo">Este párrafo tiene el color rojo porque su clase tiene esta característica</p>
+    <p class="destacadoRojo" id="azul">Este párrafo tiene el color azul porque aunque clase destacadoRojo tiene esta
+        característica su selector por id determina que sea azul. El selector por id tiene prioridad.</p>
+    <p class="grande" id="parrafoGrande">Este párrafo está subrayado porque su id tiene una regla de estilo
+        que subraya el texto.
+        Está xx-large porque aplica la clase grande. Esta clase tiene la propiedad font-size repetida. Aplica la última.
+    </p>
+</body>
+
+</html>

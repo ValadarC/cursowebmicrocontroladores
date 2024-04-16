@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Ejemplo de uso de tablas</title>
+  <meta charset="UTF-8" />
+</head>
+
+<body>
+  <h1>Tablas</h1>
+  <p>A continuación vamos a ver diferentes tablas. Dependiendo de la complejidad, debemos trabajar la accesibilidad en
+    mayor o menor medida.</p>
+  <h2>Tabla simple</h2>
+  <table border="1">
+    <caption>Informe metereológico</caption>
+    <tr>
+      <th>Hoy</th>
+      <th>Mañana</th>
+      <th>Sábado</th>
+    </tr>
+    <tr>
+      <td>Soleado</td>
+      <td>Mayormente soleado</td>
+      <td>Parcialmente nublado</td>
+    </tr>
+    <tr>
+      <td>19°C</td>
+      <td>17°C</td>
+      <td>12°C</td>
+    </tr>
+  </table>
+
+  <h2>Tabla simple</h2>
+  <p>El título accesible está con el atributo aria-label. Visualmente no aparece y el lector lo pronuncia</p>
+  <table aria-label="Informe metereológico" border="1">
+    <tr>
+      <th>Hoy</th>
+      <th>Mañana</th>
+      <th>Sábado</th>
+    </tr>
+    <tr>
+      <td>Soleado</td>
+      <td>Mayormente soleado</td>
+      <td>Parcialmente nublado</td>
+    </tr>
+    <tr>
+      <td>19°C</td>
+      <td>17°C</td>
+      <td>12°C</td>
+    </tr>
+  </table>
+
+  <h2>Tabla con scope</h2>
+  <p>El título accesible está con el atributo aria-label. Scope ayuda a interpretar la tabla</p>
+  <table aria-label="Informe metereológico" border="1">
+    <tr>
+      <th>Día</th>
+      <th scope="col">Hoy</th>
+      <th scope="col">Mañana</th>
+      <th scope="col">Sábado</th>
+    </tr>
+    <tr>
+      <th scope="row">Condición</th>
+      <td>Soleado</td>
+      <td>Mayormente soleado</td>
+      <td>Parcialmente nublado</td>
+    </tr>
+    <tr>
+      <th scope="row">Temperatura</th>
+      <td>19°C</td>
+      <td>17°C</td>
+      <td>12°C</td>
+    </tr>
+    <tr>
+      <th scope="row">Vientos</th>
+      <td>E 13 km/h</td>
+      <td>E 11 km/h</td>
+      <td>S 16 km/h</td>
+    </tr>
+  </table>
+</body>
+
+</html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inicio | JSON PlaceHolder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <main class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./index.html">
+                    <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo de Bootstrap"
+                        width="30" height="24">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Pulsa para ver opciones">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./index.html">Consulta de tareas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./tareas.html">Mantenimiento de tareas</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h1 class="display-1">JSON Placeholder API</h1>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <select class="form-select" id="usuarios" aria-label="Elige un usuario de la lista">
+                    <option value="0" selected>Todos los usuarios</option>
+                </select>
+
+                <div class="spinner-border" role="status" hidden>
+                    <span class="visually-hidden">Cargando tareas</span>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <table class="table" id="tablaTareas" hidden>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Completada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="mt-4" />
+
+        <footer>&copy; Juan Luis Ochoa - 2024</footer>
+    </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script>
+        //  const formatter = new Intl.NumberFormat('es-ES');
+        const btnCargarAPI = document.querySelector('#cargarTareas');
+        const tabla = document.querySelector('table');
+        const spinner = document.querySelector('.spinner-border');
+        const listaUsuarios = document.querySelector('#usuarios');
+
+        const obtenerUsuarios = async () => {
+            try {
+                const respuesta = await fetch('https://jsonplaceholder.typicode.com/users');
+                const datos = await respuesta.json();
+                console.log(datos);
+                llenarListaUsuarios(datos);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        const llenarListaUsuarios = (usuarios) => {
+            usuarios.forEach(x => {
+                const { id, name } = x;
+                const option = document.createElement('option');
+                option.textContent = name;
+                option.value = id;
+                listaUsuarios.appendChild(option);
+            });
+        }
+
+        const obtenerTareas = async () => {
+            tabla.hidden = true;
+            spinner.hidden = false;
+            const usuario = listaUsuarios.value;
+            let url;
+            console.log(usuario)
+            if (usuario == 0) {
+                url = `https://jsonplaceholder.typicode.com/todos`;
+            } else {
+                url = `https://jsonplaceholder.typicode.com/todos?userId=${usuario}`;
+            }
+            try {
+                const respuesta = await fetch(url);
+                const datos = await respuesta.json();
+                console.log(datos);
+                mostrarTareas(datos);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        const mostrarTareas = (datos) => {
+            const tBody = document.querySelector('tbody');
+            tBody.innerHTML = '';
+            let datosTabla = [];
+
+            datos.forEach(x => {
+                const fila = document.createElement('tr');
+                tBody.appendChild(fila);
+                const celdaId = document.createElement('td');
+                celdaId.textContent = x.id;
+                const celdaUserId = document.createElement('td');
+                celdaUserId.textContent = x.userId;
+                const celdaTitulo = document.createElement('td');
+                celdaTitulo.textContent = x.title;
+                const celdaCompletada = document.createElement('td');
+                const icono = document.createElement('i');
+                if (x.completed) {
+                    icono.classList.add('fa-solid', 'fa-check');
+                    icono.style.color = 'green';
+                } else {
+                    icono.classList.add('fa-solid', 'fa-xmark');
+                    icono.style.color = 'red';
+                }
+                celdaCompletada.appendChild(icono);
+
+                fila.appendChild(celdaId);
+                fila.appendChild(celdaUserId);
+                fila.appendChild(celdaTitulo);
+                fila.appendChild(celdaCompletada);
+                datosTabla.push(fila);
+            });
+
+            tabla.hidden = false;
+            spinner.hidden = true;
+
+            // Función que revisa si ya ha habido una consulta previa
+            // Limpia los datos anteriores del datatable y le pone los nuevos
+            if ($.fn.DataTable.isDataTable('#tablaTareas')) {
+                $('#tablaTareas').DataTable().clear();
+                $('#tablaTareas').DataTable().rows.add(datosTabla);
+            }
+            // new DataTable('#tablaPaises');
+            // Cambio de idioma
+            // https://datatables.net/manual/i18n
+            new DataTable('#tablaTareas', {
+                destroy: true,
+                language: {
+                    info: 'Mostrando _PAGE_ de _PAGES_',
+                    search: "Buscar:",
+                    infoEmpty: 'No hay registros',
+                    infoFiltered: '(filtrados de _MAX_ total registros)',
+                    lengthMenu: '_MENU_ registros por página',
+                    zeroRecords: 'No encontrado',
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Último"
+                    },
+                }
+            });
+        }
+
+        listaUsuarios.addEventListener('change', obtenerTareas);
+        document.addEventListener('DOMContentLoaded', obtenerUsuarios);
+    </script>
+
+</body>
+
+</html>

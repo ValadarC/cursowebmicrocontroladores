@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Posicionamiento relativo</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        #primero {
+            background-color: #606;
+            color: #ffc;
+            text-align: center;
+            width: 300px;
+        }
+
+        #segundo {
+            /* position: relative; */
+            width: 300px;
+            background-color: #066;
+            color: #ffc;
+            top: 70px;
+            left: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hola</h1>
+    <div id="primero">
+        <p>Párrafo de prueba</p>
+    </div>
+    <div>
+        <p>El h2 tiene posicionamiento relative</p>
+        <p>Con top, bottom, left y right puedo moverlo a partir de su posición natural</p>
+    </div>
+    <h2 id="segundo">hola de nuevo!</h2>
+</body>
+
+</html>

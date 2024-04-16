@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variables y constantes</title>
+</head>
+<body>
+    
+    <script>
+        // Variables
+        // let vs var
+        // var NO SE DEBE USAR YA PARA DESARROLLAR EN JS
+        // Motivos:
+        // Primero: Con var se puede usar una variable antes de declararse
+        // esto se llama Hoisting y está considerado una muy mala práctica
+        // En la mayoría de lenguajes de programación esto no se puede hacer
+        // Segundo: Con var no está nada claro el ámbito de las variables
+        // con let, el ámbito de uso de una variable abarca al sitio donde se define
+
+        // const vs let
+        // const se aconseja utilizar SIEMPRE que una variable no cambie su valor
+        const pi = 3.1416;
+        pi=8;
+        // const se aconseja utilizar siempre para objetos y let solo en aquellas
+        // variables que cambien de valor
+        let edad=0;
+        edad= prompt("Introduce edad");
+
+        const persona = {
+            nombre: 'Juan Luis',
+            apellido: 'Ochoa',
+            profesion: 'Desarrollador'
+        }
+
+        persona.profesion = 'Formador';
+
+        a=5;
+        console.log(a);
+        var a;
+        sumar();
+        function sumar () {
+            a = 8;
+            var b = 2;
+            console.log(a+b);
+            console.log(a);
+        }
+
+        console.log(a);
+    </script>
+</body>
+</html>

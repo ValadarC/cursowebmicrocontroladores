@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="RadoVT">
+    <title>REST APIs | Actividad 6</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+
+<body>
+    <button onclick="cargarCocteles()" class="btn btn-primary">Cargar Cócteles</button>
+    <script>
+        /*
+        Javascript. actividad 6 
+        Instrucciones: Se realizará una página web básica con la estructura fundamental.
+
+         • Desarrollar una página web que tome datos de cócteles en formato JSON de la dirección:
+            ◦ https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
+         • Por cada cóctel mostrar:
+            ◦ Un cabecera h2 con el nombre del cóctel (strDrink)
+            ◦ Un párrafo con las instrucciones (strInstructions)
+            ◦ Una imagen con la foto del cóctel (strDrinkThumb)
+         */
+
+        const cargarCocteles = async () => {
+            try {
+                const peticion = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita');
+                const respuesta = await peticion.json();
+                mostrarResultado(respuesta);
+            } catch (error) {
+                console.log("Ha ocurrido un error" + error);
+            }
+        }
+
+        const mostrarResultado = (cocteles) => {
+            document.body.innerHTML = '';
+            const elDrink = cocteles.drinks;
+            elDrink.forEach(coctel => {
+
+                const { strDrink, strInstructions, strDrinkThumb } = coctel;
+
+                const contTarjeta = document.createElement('div');
+                contTarjeta.classList.add('card');
+                contTarjeta.style.boxShadow = "2px 2px 4px #CCC";
+                contTarjeta.style.width = "18rem";
+                contTarjeta.style.margin = "3% auto";
+                contTarjeta.style.float = "left";
+                contTarjeta.style.height ="600px";
+                contTarjeta.style.overflow = "auto";
+
+                const imagenTarjeta = document.createElement('img');
+                imagenTarjeta.src = strDrinkThumb;
+                imagenTarjeta.classList.add('card-img-top');
+                imagenTarjeta.alt = "Imagen de" + strDrink;
+
+                const contenidoTarjeta = document.createElement('div');
+                contenidoTarjeta.classList.add('card-body');
+
+                const tituloTarjeta = document.createElement('h2');
+                tituloTarjeta.classList.add('card-title');
+                tituloTarjeta.textContent = strDrink;
+
+                const parrafoHora = document.createElement('p');
+                parrafoHora.classList.add('card-text');
+                parrafoHora.style.textAlign = "center";
+                parrafoHora.textContent = strInstructions;
+
+                contenidoTarjeta.append(tituloTarjeta, parrafoHora);
+        
+                contTarjeta.append(imagenTarjeta, contenidoTarjeta);
+
+                document.body.append(contTarjeta);
+
+            });
+        }
+
+    </script>
+</body>
+
+</html>

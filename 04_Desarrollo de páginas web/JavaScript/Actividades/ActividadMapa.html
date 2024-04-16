@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Rest Countries API</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .bandera {
+            width: 25px;
+            height: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>API Fetch</h1>
+        <form>
+            <div class="form-group">
+                <label for="continente">Continente</label>
+                <input type="text" class="form-control" id="continente" placeholder="Introduce continente">
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Cargar países de continente</button>
+        </form>
+        <hr />
+        <button type="button" class="btn btn-primary" id="cargarPaises">
+            Cargar todos los países
+        </button>
+
+        <div class="spinner-border" role="status" hidden>
+            <!--hidden a true es para que no se mmuestre las cabeceras sin información-->
+            <span class="visually-hidden">Cargando países</span>
+            <!--visually-hidden lee a los ciegos el texto cargardo paises-->
+        </div>
+
+        <table class="table" hidden>
+            <thead>
+                <tr>
+                    <th scope="col">Bandera</th>
+                    <th scope="col">País</th>
+                    <th scope="col">Continente</th>
+                    <th scope="col">Capital</th>
+                    <th class="text-end" scope="col">Habitantes</th>
+                    <th scope="col">Google_Maps</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const formatter = new Intl.NumberFormat('es-ES'); // es e la API de JS  , se introduce de parametro el país
+        const btnCargarAPI = document.querySelector('#cargarPaises');
+        const formulario = document.querySelector('form');
+        const tabla = document.querySelector('table');
+        const spinner = document.querySelector('.spinner-border');
+
+        const obtenerDatosAPI = async () => {
+            tabla.hidden = true;
+            spinner.hidden = false; // es una ruedita animada para que se mueva mientras carga datos.
+            try {
+                const respuesta = await fetch('https://restcountries.com/v3.1/all');
+                const datos = await respuesta.json();
+                console.log(datos);
+                mostrarHTMLAPI(datos);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        const obtenerDatosContinenteAPI = async (e) => {
+            e.preventDefault(); // la presion sobre el boton dispara el evento submit del formulaio, con esto lo quitamos , asi ya no se hace
+            tabla.hidden = true;
+            spinner.hidden = false;
+            const continente = document.querySelector('#continente').value; //con los inputs no usamos textContent HAY que usar value
+            try {
+                const respuesta = await fetch(`https://restcountries.com/v3.1/region/${continente}`);
+                const datos = await respuesta.json();
+                console.log(datos);
+                mostrarHTMLAPI(datos);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        const mostrarHTMLAPI = (datos) => {
+            const tBody = document.querySelector('tbody');
+            tBody.innerHTML = ''; //esto vacioa el tBody, `para el caso que le demos a cargar dos veces-. de otra forma se añadirian a los insertados anteriormente los paises integrados en la tabla
+
+            datos.forEach(x => {
+                const fila = document.createElement('tr');
+                tBody.appendChild(fila);
+                const celdaBandera = document.createElement('td');
+                const bandera = document.createElement('img');
+                bandera.src = x.flags.png;
+                bandera.alt = `Bandera de ${x.name.common}`;
+                bandera.classList.add('bandera');
+                celdaBandera.appendChild(bandera);
+                const celdaPais = document.createElement('td');
+                celdaPais.textContent = x.name.common;
+                const celdaContinente = document.createElement('td');
+                celdaContinente.textContent = x.region;
+                const celdaCapital = document.createElement('td');
+                celdaCapital.textContent = (x.capital && x.capital[0]) || "-----------";  // expresiones que explico gabriel de JS si hay dato en x.cpaital como es un && pasa al siguiente , entonces pasa a x.capital[0] si hay dato devolvera este, sino el primerpo
+                const celdaHabitantes = document.createElement('td');
+                celdaHabitantes.classList.add('text-end');
+                celdaHabitantes.textContent = formatter.format(x.population); //hace legible una rista de numeros a formatter.format(numero_que_queramos_tratar)
+                
+                const celdaEnlaceGoogle = document.createElement('td');
+                const aEnlaceGoogle = document.createElement('a');
+                celdaEnlaceGoogle.appendChild(aEnlaceGoogle);
+
+                aEnlaceGoogle.href = x.maps.googleMaps;
+                aEnlaceGoogle.classList.add('btn','btn-primary');
+                aEnlaceGoogle.role="button";
+                aEnlaceGoogle.textContent="mapa";
+                aEnlaceGoogle.target="blank";
+
+                fila.appendChild(celdaBandera);
+                fila.appendChild(celdaPais);
+                fila.appendChild(celdaContinente);
+                fila.appendChild(celdaCapital);
+                fila.appendChild(celdaHabitantes);
+                fila.appendChild(celdaEnlaceGoogle);
+            });
+
+            tabla.hidden = false; //mostramos la tabla con los datos
+            spinner.hidden = true; //como ha terminado la carga , escondemos el spinner
+        }
+
+        btnCargarAPI.addEventListener('click', obtenerDatosAPI);
+        formulario.addEventListener('submit', obtenerDatosContinenteAPI);
+    </script>
+</body>
+
+</html>

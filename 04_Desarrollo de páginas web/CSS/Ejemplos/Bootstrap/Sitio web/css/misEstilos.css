@@ -1,0 +1,18 @@
+footer {
+  position: absolute;
+  bottom: 10;
+  line-height: 50px;
+}
+
+.negrita {
+<<<<<<< HEAD
+  font-weight: bold;
+}
+=======
+    font-weight: bold;
+}
+
+.animate__animated.animate__bounce {
+    --animate-duration: 2s;
+}
+>>>>>>> c5c4b9265bf6b297b6abfd0152a41b740f9e743e

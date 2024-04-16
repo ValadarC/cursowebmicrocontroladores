@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>index.html</loc>
+    <lastmod>2022-01-15</lastmod>
+   </url>
+   <url>
+    <loc>nuestros-productos.html</loc>
+    <lastmod>2022-01-15</lastmod>
+   </url>
+   <url>
+    <loc>quienes-somos.html</loc>
+    <lastmod>2022-01-15</lastmod>
+   </url>
+   <url>
+    <loc>zona-miembros.html</loc>
+    <lastmod>2022-01-15</lastmod>
+   </url>
+   <url>
+    <loc>registrate.html</loc>
+    <lastmod>2022-01-15</lastmod>
+   </url>
+  </urlset>

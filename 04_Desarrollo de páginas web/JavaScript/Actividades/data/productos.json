@@ -1,0 +1,18 @@
+[
+    {
+      "nombre": "Ordenador",
+      "categoria": "Tecnología",
+      "precio": "500"
+    },
+    {
+        "nombre": "Monitor",
+        "categoria": "Tecnología",
+        "precio": "100"
+    },
+    {
+        "nombre": "Camisa",
+        "categoria": "Moda",
+        "precio": "25"
+    }
+  ]
+  

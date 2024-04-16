@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ejemplo de uso de selectores de tipo o etiqueta</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        body {
+            /* Margen de la página de media pulgada. */
+            margin: 0.5in;
+        }
+
+        p {
+            /* 4 mm de separación de las palabras de los párrafos */
+            word-spacing: 4mm;
+        }
+
+        #fuente{
+            text-align: right;
+            text-transform:uppercase;
+        }
+
+        a {
+            /* Tamaño de letra de los enlaces 12 puntos. */
+            font-size: 12pt;
+        }
+
+        h1 {
+            /* Tamaño 2,5 veces superior el que tiene por defecto */
+            font-size: 2.5em;
+        }
+
+        h2 {
+            /* El tamaño de letra de 10 píxeles */
+            font-size: 10px;
+        }
+
+        section {
+            /* El contenido de las secciones será el 75% del ancho de la página. Se adapta al dispositivo */
+            width: 5%;
+        }
+
+        article {
+            /* El contenido de las secciones será el 80% del ancho de la sección (article está dentro de la sección). Se adapta al dispositivo */
+            width: 80%;
+        }
+
+        .pdf {
+            background-image: url("Imagenes/icono_pdf.png");
+            background-repeat: no-repeat;
+            background-position: left;
+            padding-left: 20px;
+        }
+
+        #numerosromanos{
+            list-style-type:upper-roman;
+        }
+
+        #numerosgriegos{
+            list-style-type:lower-greek;
+        }
+
+        #listaiconos{
+           list-style-image: url("Imagenes/icono_pdf.png");
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Título</h1>
+    <h2>Párrafo</h2>
+    <img src="Imagenes/fondo.jpg" style="height: 10cm;width: 50%"/>
+    <p id="fuente">Este es un párrafo al que hemos cambiado varios atributos desde la propiedad CSS font. Está alineado
+        a la derecha y en mayúsculas</p>
+    <a class="pdf" href="#">Enlace a un documento PDF</a>
+    <ol id="numerosromanos">
+        <li>list-style-type: upper-roman</li>
+        <li>Elemento </li>
+        <li>Elemento2</li>
+    </ol>
+    <br />
+    <ol id="numerosgriegos">
+        <li>list-style-type: lower-greek</li>
+        <li>Elemento </li>
+        <li>Elemento2</li>
+    </ol>
+    <br />
+    <ul id="listaiconos">
+        <li>Lista con icono como viñeta</li>
+        <li>Elemento </li>
+        <li>Elemento2</li>
+    </ul>
+    <section>Sección 1. Sección 1. Sección 1. Sección 1. Sección 1. Sección 1. Sección 1. Sección 1. Sección 1.
+        <article>Artículo 1 de la sección 1. Artículo 1 de la sección 1. Artículo 1 de la sección 1. Artículo 1 de la
+            sección 1. Artículo 1 de la sección 1. Artículo 1 de la sección 1. Artículo 1 de la sección 1. Artículo 1 de
+            la sección 1. Artículo 1 de la sección 1.
+        </article>
+    </section>
+</body>
+
+</html>

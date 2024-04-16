@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Posicionamiento flotante en párrafos</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        .imagen {
+            width: 100px;
+            height: 100px;
+        }
+
+        .fila1columna {
+            float: left;
+            border: solid;
+            box-sizing: border-box;
+            width: 25%;
+        }
+
+        .fila1columnaDerecha {
+            float: right;
+            border: solid;
+            box-sizing: border-box;
+            width: 25%;
+        }
+
+        .fila2 {
+            float: left;
+            margin-left: 20px;
+            margin-top: 20px;
+            border: solid;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fila1columna">
+        <h3>Primero</h3>
+        <p>Primer párrafo con cualquier texto</p>
+        <img class="imagen"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/512px-HTML5_logo_and_wordmark.svg.png" />
+    </div>
+    <div class="fila1columna">
+        <h3>Segundo</h3>
+        <p>Segundo párrafo con cualquier texto</p>
+        <img class="imagen" src="http://fernandosarachaga.com/wp-content/uploads/css3-logo.png" />
+    </div>
+    <div class="fila1columnaDerecha">
+        <h3>Tercero</h3>
+        <p>Tercer párrafo con cualquier texto</p>
+        <img class="imagen" src="https://www.codementor.io/assets/page_img/learn-javascript.png" />
+    </div>
+    <div class="fila1columnaDerecha">
+        <h3>Cuarto</h3>
+        <p>Cuarto párrafo con cualquier texto</p>
+        <img class="imagen" src="https://www.codementor.io/assets/page_img/learn-javascript.png" />
+    </div>
+    <div class="fila2">
+        <h3>Cuarto</h3>
+        <p>Cuarto párrafo con cualquier texto</p>
+        <img class="imagen" src="http://www.w3schools.com/bootstrap/bs.png" />
+    </div>
+</body>
+
+</html>

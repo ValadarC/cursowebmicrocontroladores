@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>01 - Actividad API</title>
+</head>
+
+<body>
+    <div class="container">
+        <main>
+            <h1>Tabla de productos</h1>
+        </main>
+        <section>
+            <button id="btn" class="btn btn-dark">Mostrar productos</button>
+            <button id="btn2" class="btn btn-dark">Mostrar productos 2</button>
+            <div class="tabla"></div>
+        </section>
+    </div>
+
+    <script>
+        const boton = document.querySelector('#btn');
+        const boton2 = document.querySelector('#btn2');
+        const divtabla = document.querySelector('.tabla');
+
+        const leerJSON = () => {
+            fetch('data/productos.json')
+            .then(resp => {
+                return resp.json()
+            })
+            .then(productos => {
+                construirTabla(productos)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        };
+
+        const leerJSONAsyncAwait = async () => {
+            try {
+                const resp = await fetch('data/productos.json');
+                const productos = await resp.json();
+                construirTabla(productos);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        const construirTabla = (productos) => {
+            divtabla.innerHTML = '';
+            const tabla = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+            tabla.classList.add('table', 'table-striped-columns','table-hover');
+            tabla.classList.add('table-striped-columns');
+            tabla.appendChild(thead);
+            tabla.appendChild(tbody);
+
+            const trh = document.createElement('tr');
+            const th1 = document.createElement('th');
+            const th2 = document.createElement('th');
+            const th3 = document.createElement('th');
+            th1.textContent = "Nombre";
+            th2.textContent = "Categoría";
+            th3.textContent = "Precio";
+            trh.appendChild(th1);
+            trh.appendChild(th2);
+            trh.appendChild(th3);
+            thead.appendChild(trh);
+
+            productos.forEach(producto => {
+                const {nombre, categoria, precio} = producto;
+                
+                const trb = document.createElement('tr');
+                const td1 =document.createElement('td');
+                const td2 =document.createElement('td');
+                const td3 =document.createElement('td');
+                trb.appendChild(td1);
+                trb.appendChild(td2);
+                trb.appendChild(td3);
+
+                td1.textContent = nombre;
+                td2.textContent = categoria;
+                td3.textContent = precio;
+
+                tbody.appendChild(trb);
+            })
+            divtabla.appendChild(tabla);
+        }
+        boton.classList.add('mt-4');
+        boton.addEventListener('click', leerJSON);
+        boton2.classList.add('mt-4');
+        boton2.addEventListener('click', leerJSONAsyncAwait);
+
+    </script>
+</body>
+
+</html>
+
+<!-- Parte 1
+• Desarrollar un archivo JSON que registre información de 5 productos.
+• Por cada producto se registrará el nombre, la categoría y el precio.
+• Incluir en la parte HTML un botón para que al hacer clic cargue los datos de los productos en una tabla
+• Emplear la API Fetch de JavaScript para resolver la tarea. -->

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Ejemplo de uso del DOM</title>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <h1>Queen</h1>
+  <p class="cursiva">Banda británica de rock formada en 1970 en Londres.</p>
+  <img src="https://indiehoy.com/wp-content/uploads/2020/10/queen.jpg" width="400" height="200" id="fotoGrupo"
+    alt="Fotografía de los componentes del grupo Queen" />
+  <h2 class="cursiva">Integrantes del grupo</h2>
+  <ul>
+    <li>Brian May</li>
+    <li>Freddie Mercury</li>
+    <li>John Deacon</li>
+    <li>Roger Taylor</li>
+  </ul>
+  <h2 class="cursiva">Discografía</h2>
+  <table aria-label="Grandes éxitos de Queen">
+    <tr>
+      <th scope="col">Año</th>
+      <th scope="col">Disco</th>
+    </tr>
+    <tr>
+      <td>1975</td>
+      <td>A Night at the Opera</td>
+    </tr>
+    <tr>
+      <td>1986</td>
+      <td>A Kind of Magic</td>
+    </tr>
+    <tr>
+      <td>1989</td>
+      <td>The Miracle</td>
+    </tr>
+    <tr>
+      <td colspan="2">"A Kind of Magic" fue el álbum más exitoso.</td>
+    </tr>
+  </table>
+  <h2 class="cursiva">Sitio web oficial</h2>
+  <a href="https://queenonline.com/" target="_blank">queenonline.com</a>
+  <br>
+  <h3>Regístrate para enviarte noticias del grupo</h3>
+  <form>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="usuario_nombre" required placeholder="Nombre (obligatorio)">
+    <br>
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="usuario_email" required placeholder="Email (obligatorio)">
+    <br>
+    <button type="submit">Registrarme</button>
+  </form>
+
+  <script>
+    // Todo en JavaScript esta conectado en el document. 
+    const lista = document.querySelector('ul');
+    // En una web, a cada elemento se le conoce como nodo. 
+    // Un nodo, puede que tenga hijos. Serán aquellos que estén dentro suya
+    // El siguiente ejemplo, lista por consola los 4 elementos li de la lista (los 4 integrantes del grupo)
+    console.log(lista.children);
+    // El siguiente ejemplo, lista por consola todos los hijos de body
+    console.log(document.body.children);
+
+    // Texto del primer hijo
+    console.log(lista.children[0].textContent);
+    lista.children[0].textContent = 'Juan Luis';
+    // Recorremos toda la lista de hijos de ul y le cambiamos el color
+    for (let i = 0; i < lista.children.length; i++) {
+      lista.children[i].style.color = 'red';
+    }
+
+    for (li of lista.children) {
+      li.style.color = 'red';
+    }
+
+    // Otro tema importante cuando trabajas con el DOM es la creación de HTML desde JavaScript
+    // Vamos a crear un nuevo enlace. Lo primero que hay que hacer es crear el elemento HTML, en este caso un enlace
+    const enlace = document.createElement('a');
+    // El segundo paso es crear el texto del enlace y darle otras características
+    enlace.textContent = 'Queen en Wikipedia';
+    // Despues vamos a asignar una ruta 
+    enlace.href = 'https://es.wikipedia.org/wiki/Queen';
+    enlace.ariaLabel = 'Enlace a la información de Queen en Wikipedia';
+    enlace.target = '_blank';
+    // Finalmente se agrega el enlace donde deseas mostrarlo
+    // appendChild lo agrega al final
+     document.body.appendChild(enlace);
+    // Así lo agregaría a la lista de integrantes del grupo
+    // lista.appendChild(enlace)
+    // Ahora lo ponemos arriba, entre el h1 y el párrafo
+    //const cabecera = document.querySelector('h1');
+    // after lo pone después, en este caso, después de la cabecera
+    //cabecera.after(enlace);
+    //const parrafoPrimero = document.querySelector('p');
+    // before lo pone antes, en este caso, antes del párrafo
+    // parrafoPrimero.before(enlace);
+
+    // Vamos a crear un segundo ejemplo. Crearemos un div y dentro una imagen
+    // Creamos el div
+    const div = document.createElement('div');
+    // Agregamos el div al body
+    document.body.appendChild(div);
+    // Creamos la imagen y la configuramos
+    const imagen = document.createElement('img');
+    imagen.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Queen_%E2%80%93_montagem_%E2%80%93_new.png/428px-Queen_%E2%80%93_montagem_%E2%80%93_new.png';
+    imagen.alt = 'Imagen del cuarteto';
+    // Asignamos la imagen al div
+    div.appendChild(imagen);
+
+    // Eliminamos la tabla y el formulario
+    // Primero la tabla
+    const tabla = document.querySelector('table');
+    tabla.remove();
+    // Ahora el formulario
+    const formulario = document.querySelector('form');
+    formulario.remove();
+
+    // Más difícil todavía. Agregamos la tabla a partir de un array
+    const discografia = [
+      { year: 1975, disco: 'A Night at the Opera' },
+      { year: 1986, disco: 'A Kind of Magic' },
+      { year: 1989, disco: 'The Miracle' }
+    ];
+
+    // Creamos la tabla
+    const tablaNueva = document.createElement('table');
+    // Le damos características
+    tablaNueva.ariaLabel = 'Grandes éxitos de Queen';
+    // Y empezamos a construir sus filas y celdas
+    const filaTitulo = document.createElement('tr');
+    const primeraCeldaFilaTitulo = document.createElement('th');
+    primeraCeldaFilaTitulo.textContent = 'Año';
+    const segundaCeldaFilaTitulo = document.createElement('th');
+    segundaCeldaFilaTitulo.textContent = 'Disco';
+    filaTitulo.appendChild(primeraCeldaFilaTitulo);
+    filaTitulo.appendChild(segundaCeldaFilaTitulo);
+    tablaNueva.appendChild(filaTitulo);
+
+    discografia.forEach(x => {
+      // Por cada disco agregramos una fila nueva
+      const nuevaFila = document.createElement('tr');
+      // Y ahora dos casillas. Esta primera es la del año
+      const celdaYear = document.createElement('td');
+      celdaYear.textContent = x.year;
+      // Y esta la del disco
+      const celdaDisco = document.createElement('td');
+      celdaDisco.textContent = x.disco;
+      // Agregamos las casillas del año y del disco a la fila
+      nuevaFila.appendChild(celdaYear);
+      nuevaFila.appendChild(celdaDisco);
+      // Y agregamos la fila a la tabla
+      tablaNueva.appendChild(nuevaFila);
+    });
+
+    // Ahora agregamos la tabla a la página web
+    document.body.appendChild(tablaNueva);
+  </script>
+</body>
+
+</html>

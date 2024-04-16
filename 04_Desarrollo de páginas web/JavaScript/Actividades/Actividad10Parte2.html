@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 10.2 | Firebase</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <main class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./index.html">
+                    <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo de Bootstrap"
+                        width="30" height="24">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Pulsa para ver opciones">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./index.html">Consulta de personas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./personas.html">Mantenimiento de personas</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h1 class="display-1">Firebase</h1>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <select class="form-select" id="profesiones" aria-label="Elige un usuario de la lista">
+                    <option value="0" selected disabled>Elige un usuario de la lista</option>
+                </select>
+
+                <div class="spinner-border" role="status" hidden>
+                    <span class="visually-hidden">Cargando personas</span>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <table class="table" id="tablaPersonas" hidden>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Tarea</th>
+                                    <th scope="col">Completada</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Borrar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <small id="datosUsuario"></small>
+        <hr class="mt-4" />
+
+        <footer>&copy; RadoVT - 2024</footer>
+    </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+
+    <script type="module">
+        const listaUsuarios = document.querySelector('#profesiones');
+        const datosUsuario = document.querySelector('#datosUsuario');
+        const profesionesLista = [];
+        const registrado = [''];
+        const tabla = document.querySelector('table');
+        const spinner = document.querySelector('.spinner-border');
+        const formulario = document.createElement('form');
+        formulario.id = "formModificar";
+        const elId = document.createElement('input');
+        elId.hidden = true;
+        elId.id = "elId";
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getFirestore, collection, getDocs, query, where, orderBy, addDoc, doc, getDoc, setDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js';
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBgtX2i6_TDaF30p4mUIZIhedWwlyJL9Qk",
+            authDomain: "chatjs-33246.firebaseapp.com",
+            projectId: "chatjs-33246",
+            storageBucket: "chatjs-33246.appspot.com",
+            messagingSenderId: "23066652671",
+            appId: "1:23066652671:web:17d5f317c02826b9d6c1ca"
+        };
+
+        const getProfesiones = async () => {
+            try {
+                //const q = query(collection(db, 'usuarios'), orderBy('nombre'));
+                const q = query(collection(db, 'usuarios'));
+                const profesionesSnapshot = await getDocs(q);
+                //const profesiones = collection(db, 'usuarios');
+                //const profesionesSnapshot = await getDocs(profesiones);
+                profesionesSnapshot.docs.forEach((doc) => profesionesLista.push({
+                    id: doc.id,
+                    nombre: doc.data().nombre
+                }));
+                profesionesSnapshot.docs.forEach((doc) => registrado.push(
+                    doc.data().registro
+                ));
+                console.log(profesionesLista);
+                llenarlistaUsuarios(profesionesLista);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+
+
+        const contModal = document.createElement('div');
+        contModal.classList.add('modal', 'fade');
+        contModal.id = "exampleModal";
+        contModal.setAttribute('tabIndex', '-1');
+        contModal.setAttribute('aria-labelledby', 'exampleModalLabel');
+        contModal.setAttribute('aria-hidden', 'true');
+
+        const modalDialog = document.createElement('div');
+        modalDialog.classList.add('modal-dialog');
+
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('modal-content');
+
+        const modalHeader = document.createElement('div');
+        modalHeader.classList.add('modal-header');
+
+        const modalHeaderH1 = document.createElement('h1');
+        modalHeaderH1.classList.add('modal-title', 'fs-5');
+        modalHeaderH1.id = "exampleModalLabel";
+        modalHeaderH1.textContent = "Agregar tarea";
+
+        const modalHeaderBoton = document.createElement('button');
+        modalHeaderBoton.classList.add('btn-close');
+        modalHeaderBoton.setAttribute('data-bs-dismiss', 'modal');
+        modalHeaderBoton.setAttribute('aria-label', 'close');
+
+        const modalBody = document.createElement('div');
+        modalBody.classList.add('modal-body');
+
+
+        const modalFooter = document.createElement('div');
+        modalFooter.classList.add('modal-footer');
+
+
+        modalHeader.append(modalHeaderH1, modalHeaderBoton);
+        modalContent.append(modalHeader, modalBody, modalFooter);
+
+        modalDialog.appendChild(modalContent);
+
+        contModal.appendChild(modalDialog);
+
+        document.body.appendChild(contModal);
+
+        let albumesDeUsuario = [];
+
+        const formularioAgregar = document.createElement('form');
+        formularioAgregar.id = "formAgregar";
+
+        const agregarNuevaTarea = () => {
+
+            modalHeaderH1.textContent = "Agregar tarea nueva a " + listaUsuarios[listaUsuarios.value].textContent;
+
+            const div1 = document.createElement('div');
+            div1.classList.add('form-group', 'mt-2');
+
+            const labelDescripcion = document.createElement('label');
+            labelDescripcion.textContent = "Descripción";
+            labelDescripcion.setAttribute('for', 'campoDescripcion');
+
+            const campoDescripcion = document.createElement('input');
+            campoDescripcion.type = "text";
+            campoDescripcion.id = "campoDescripcion";
+            campoDescripcion.name = "campoDescripcion";
+            campoDescripcion.placeholder = "Descripción";
+            campoDescripcion.classList.add('form-control');
+            campoDescripcion.required = true;
+            campoDescripcion.focus();
+
+            const div2 = document.createElement('div');
+            div1.classList.add('form-group', 'mt-2');
+
+            const labelCompletada = document.createElement('label');
+            labelCompletada.textContent = "Completada";
+            labelCompletada.setAttribute('for', 'campoCompletada');
+
+            const campoCompletada = document.createElement('input');
+            campoCompletada.type = "checkbox";
+            campoCompletada.id = "campoCompletada";
+            campoCompletada.name = "campoCompletada";
+            campoCompletada.classList.add('form-check');
+
+            const aviso = document.createElement('p');
+            aviso.innerHTML = "";
+            aviso.id = "aviso";
+            aviso.style.color = "green";
+
+            div1.append(labelDescripcion, campoDescripcion);
+
+            div2.append(labelCompletada, campoCompletada, aviso);
+
+            const modalBtnCerrar = document.createElement('button');
+            modalBtnCerrar.type = "button";
+            modalBtnCerrar.classList.add('btn', 'btn-secondary');
+            modalBtnCerrar.setAttribute('data-bs-dismiss', 'modal');
+            modalBtnCerrar.textContent = "Cerrar";
+
+            const botonMod = document.createElement('input');
+            botonMod.type = "submit";
+            botonMod.classList.add('btn', 'btn-primary');
+            botonMod.value = "Agregar Tarea";
+
+            formularioAgregar.innerHTML = "";
+
+            modalBody.innerHTML = "";
+
+            modalFooter.innerHTML = "";
+
+            formularioAgregar.append(div1, div2);
+            modalBody.appendChild(formularioAgregar);
+
+            modalFooter.append(botonMod, modalBtnCerrar);
+            formularioAgregar.append(modalFooter);
+        }
+
+        const agregarTarea = async (e) => {
+            e.preventDefault();
+            const descripcion = document.querySelector('#campoDescripcion');
+            const estaCompletada = document.querySelector('#campoCompletada');
+            const aviso = document.querySelector('#aviso');
+            aviso.innerHTML = '<div class="spinner-border" role="status"><span class="visually-hidden">Cargando tareas</span></div>';
+            try {
+                const persona = await addDoc(collection(db, "tareas"), {
+                    descripcion: descripcion.value,
+                    completada: estaCompletada.checked,
+                    usuario: Number(listaUsuarios.value)
+                });
+                //alert ('Tarea agregada con el id ' + persona.id);
+                aviso.innerHTML = "<i class='fa-solid fa-check'></i> Tarea agregada con éxito";
+                aviso.style.color = 'green';
+                getTareas();
+            } catch (error) {
+                console.log(error);
+                aviso.innerHTML = "<i class='fa-solid fa-xmark'></i> Ha ocurrido un error: " + error;
+                aviso.style.color = 'red';
+            }
+        }
+
+        const llenarlistaUsuarios = (profesiones) => {
+            profesiones.forEach(x => {
+                const { id, nombre } = x;
+                const option = document.createElement('option');
+                option.textContent = nombre;
+                option.value = id;
+                listaUsuarios.appendChild(option);
+            });
+
+        }
+
+
+
+        const rellenarDatos = () => {
+            let contador = listaUsuarios.value;
+            console.log(contador);
+            let fecha = registrado[contador];
+            datosUsuario.textContent = "Registro de usuario: " + new Date(fecha.seconds * 1000).toLocaleString();
+            console.log(registrado[contador].seconds);
+        }
+
+        const getTareas = async () => {
+            rellenarDatos();
+            const tareasLista = [];
+            tabla.hidden = true;
+            spinner.hidden = false;
+            const usuario = listaUsuarios.value;
+            console.log(usuario);
+            let personasSnapshot;
+            try {
+                if (usuario !== '0') {
+                    const q = query(collection(db, 'tareas'), where('usuario', '==', Number(usuario)));
+                    personasSnapshot = await getDocs(q);
+                } else {
+                    const personas = collection(db, 'tareas');
+                    personasSnapshot = await getDocs(personas);
+                }
+
+                personasSnapshot.docs.forEach((doc) => tareasLista.push({
+                    id: doc.id,
+                    usuario: listaUsuarios[listaUsuarios.value].textContent,
+                    descripcion: doc.data().descripcion,
+                    completada: doc.data().completada,
+                }));
+                console.log(tareasLista);
+                mostrarTareas(tareasLista);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        const mostrarTareas = (datos) => {
+            const tBody = document.querySelector('tbody');
+            const tFoot = document.querySelector('tfoot');
+            tBody.innerHTML = '';
+            tFoot.innerHTML = '';
+
+            const filaBtnAgregar = document.createElement('tr');
+            const celdaBtnAgregar = document.createElement('td');
+            celdaBtnAgregar.colSpan = "3";
+
+            const btnAgregar = document.createElement('button');
+            btnAgregar.id = "btnAgregar";
+            btnAgregar.classList.add("btn", "btn-success");
+            btnAgregar.addEventListener('click', agregarNuevaTarea);
+            btnAgregar.setAttribute("data-bs-toggle", "modal");
+            btnAgregar.setAttribute("data-bs-target", "#exampleModal");
+            btnAgregar.innerHTML = '<i class="fa-regular fa-square-plus"></i> Agregar Tarea';
+
+            celdaBtnAgregar.appendChild(btnAgregar);
+            filaBtnAgregar.appendChild(celdaBtnAgregar);
+            tFoot.appendChild(filaBtnAgregar);
+
+            let datosTabla = [];
+            datos.forEach(x => {
+                const fila = document.createElement('tr');
+                tBody.appendChild(fila);
+
+                const celdaId = document.createElement('td');
+                celdaId.textContent = x.usuario;
+
+                const celdaNombre = document.createElement('td');
+                celdaNombre.textContent = x.descripcion;
+
+                const celdaCompletada = document.createElement('td');
+                const icono = document.createElement('i');
+                if (x.completada) {
+                    icono.classList.add('fa-solid', 'fa-check');
+                    icono.style.color = 'green';
+                } else {
+                    icono.classList.add('fa-solid', 'fa-xmark');
+                    icono.style.color = 'red';
+                }
+
+                celdaCompletada.appendChild(icono);
+
+                const celdaEditar = document.createElement('td');
+                const botonEditar = document.createElement('button');
+                botonEditar.style.float = "left";
+                botonEditar.style.margin = "2px";
+                botonEditar.innerHTML = "<i style='color:white' class='fa-regular fa-pen-to-square'></i>";
+                botonEditar.setAttribute('data-bs-toggle', 'modal');
+                botonEditar.setAttribute('data-bs-target', '#exampleModal');
+                botonEditar.title = "Modificar";
+                botonEditar.classList.add('btn', 'btn-primary');
+                botonEditar.onclick = () => { modificar(x.id, x.usuario, x.descripcion, x.completada); }
+
+                const celdaBorrar = document.createElement('td');
+                const botonBorrar = document.createElement('button');
+
+                botonBorrar.innerHTML = "<i style='color:white' class='fa-solid fa-trash'></i>";
+                botonBorrar.classList.add('btn', 'btn-danger');
+                botonBorrar.title = "Borrar";
+                botonBorrar.style.margin = "2px";
+                botonBorrar.onclick = () => {
+                    botonBorrar.innerHTML = "¿Borrar?"
+                    botonBorrar.onclick = () => {
+                        elId.value = x.id;
+                        borrar();
+                    }
+                }
+
+                celdaEditar.appendChild(botonEditar);
+                celdaBorrar.appendChild(botonBorrar);
+
+                fila.appendChild(celdaId);
+                fila.appendChild(celdaNombre);
+                fila.appendChild(celdaCompletada);
+                fila.appendChild(celdaEditar);
+                fila.appendChild(celdaBorrar);
+
+                datosTabla.push(fila);
+            });
+
+            tabla.hidden = false;
+            spinner.hidden = true;
+
+            // Función que revisa si ya ha habido una consulta previa
+            // Limpia los datos anteriores del datatable y le pone los nuevos
+            if ($.fn.DataTable.isDataTable('#tablaPersonas')) {
+                $('#tablaPersonas').DataTable().clear();
+                $('#tablaPersonas').DataTable().rows.add(datosTabla);
+            }
+            // new DataTable('#tablaPaises');
+            // Cambio de idioma
+            // https://datatables.net/manual/i18n
+            new DataTable('#tablaPersonas', {
+                destroy: true,
+                language: {
+                    info: 'Mostrando _PAGE_ de _PAGES_',
+                    search: "Buscar:",
+                    infoEmpty: 'No hay registros',
+                    infoFiltered: '(filtrados de _MAX_ total registros)',
+                    lengthMenu: '_MENU_ registros por página',
+                    zeroRecords: 'No encontrado',
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Último"
+                    },
+                }
+            });
+        }
+
+
+        const modificar = (id, usuario, descripcion, completada) => {
+            modalHeaderH1.textContent = "Modificar tarea de " + usuario;
+
+            const div1 = document.createElement('div');
+            div1.classList.add('form-group', 'mt-2');
+
+            const labelDescripcion = document.createElement('label');
+            labelDescripcion.textContent = "Título";
+            labelDescripcion.setAttribute('for', 'campoDescripcion' + id);
+
+            const campoDescripcion = document.createElement('input');
+            campoDescripcion.type = "text";
+            campoDescripcion.id = "campoDescripcion" + id;
+            campoDescripcion.name = "campoDescripcion" + id;
+            campoDescripcion.placeholder = "Título";
+            campoDescripcion.value = descripcion;
+            campoDescripcion.classList.add('form-control');
+            campoDescripcion.required = true;
+            campoDescripcion.focus();
+
+            const div2 = document.createElement('div');
+            div1.classList.add('form-group', 'mt-2');
+
+            const labelCompletada = document.createElement('label');
+            labelCompletada.textContent = "Completada";
+            labelCompletada.setAttribute('for', 'campoCompletada' + id);
+
+            const campoCompletada = document.createElement('input');
+            campoCompletada.type = "checkbox";
+            campoCompletada.id = "campoCompletada" + id;
+            campoCompletada.name = "campoCompletada" + id;
+            campoCompletada.checked = completada;
+            campoCompletada.classList.add('form-check');
+
+            elId.value = id;
+
+            const aviso = document.createElement('p');
+            aviso.innerHTML = "";
+            aviso.id = "aviso" + id;
+            aviso.style.color = "green";
+
+            div1.append(labelDescripcion, campoDescripcion);
+
+            div2.append(labelCompletada, campoCompletada, elId, aviso);
+
+            const modalBtnCerrar = document.createElement('button');
+            modalBtnCerrar.type = "button";
+            modalBtnCerrar.classList.add('btn', 'btn-secondary');
+            modalBtnCerrar.setAttribute('data-bs-dismiss', 'modal');
+            modalBtnCerrar.textContent = "Cerrar";
+
+            const botonMod = document.createElement('input');
+            botonMod.type = "submit";
+            botonMod.classList.add('btn', 'btn-primary');
+            botonMod.value = "Guardar Cambios";
+
+            formulario.innerHTML = "";
+
+            modalBody.innerHTML = "";
+
+            modalFooter.innerHTML = "";
+
+            formulario.append(div1, div2);
+            modalBody.appendChild(formulario);
+
+            modalFooter.append(botonMod, modalBtnCerrar);
+            formulario.append(modalFooter);
+
+        }
+
+        const modificarTarea = async (e) => {
+            e.preventDefault();
+            const descripcion = document.querySelector('#campoDescripcion' + elId.value);
+            const estaCompletada = document.querySelector('#campoCompletada' + elId.value);
+            const aviso = document.querySelector('#aviso' + elId.value);
+            aviso.innerHTML = '<div class="spinner-border" role="status"><span class="visually-hidden">Cargando tareas</span></div>';
+
+            try {
+                const personaRef = doc(db, 'tareas', elId.value);
+                await setDoc(personaRef, { descripcion: descripcion.value, completada: estaCompletada.checked }, { merge: true });
+                //alert('Tarea modificada con éxito');
+                aviso.innerHTML = "<i class='fa-solid fa-check'></i> Tarea modificada con éxito";
+                aviso.style.color = 'green';
+                getTareas();
+            } catch (error) {
+                console.log(error);
+                aviso.innerHTML = "<i class='fa-solid fa-xmark'></i> Ha ocurrido un error: " + error;
+                aviso.style.color = 'red';
+            }
+        }
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        listaUsuarios.addEventListener('change', getTareas);
+        document.addEventListener('DOMContentLoaded', getProfesiones);
+        formularioAgregar.addEventListener('submit', agregarTarea);
+        formulario.addEventListener('submit', modificarTarea);
+
+        const borrar = async (e) => {
+
+            try {
+                await deleteDoc(doc(db, "tareas", elId.value));
+                getTareas();
+                alert('Tarea eliminada con éxito');
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        .azul {
+            color: blue;
+        }
+        .grande {
+            width: 150px;
+        }
+      </style>
+    
+    <title>Actividad repaso 1</title>
+</head>
+<body>
+    <h1>Diario El País</h1>
+    <a href="https://elpais.com/" target="_blank" id="link">Diario el pais</a>
+    <img id="img" src="el-pais.svg" alt="Logo de Diario El País">
+    <script>
+       document.querySelector('h1').textContent = 'Diario El Mundo';
+
+    const link = document.querySelector('#link');
+    link.src = 'https://www.elmundo.es/';
+    link.alt = 'Periodico el mundo';
+
+    const imagen = document.querySelector('#img')
+    imagen.src = 'https://i.etsystatic.com/44524775/r/il/2fae0a/5215313589/il_794xN.5215313589_tgtw.jpg'
+    imagen.alt = 'otra imagen'
+
+    const cabecera = document.querySelector('h1');
+    cabecera.classList.add('azul');
+
+    const gatito = document.querySelector('#img')
+    gatito.classList.add('grande');
+
+    gatito.remove()
+    link.remove()
+
+    </script>
+</body>
+</html>
+
+
+
+
+

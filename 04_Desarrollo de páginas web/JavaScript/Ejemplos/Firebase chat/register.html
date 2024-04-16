@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Registrarse | Chat</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style type="text/css">
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-signin .checkbox {
+            font-weight: 400;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-signin input[type='email'] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type='password'] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="h3 mb-3 font-weight-normal">Registrarse</h1>
+            <form class="form-signin">
+                <div class="form-group">
+                    <label for="email" class="sr-only my-2">Email</label>
+                    <input type="email" class="form-control" placeholder="Email" name="email" id="email" required
+                        autofocus />
+                    <small id="emailHelp" aria-live="polite" class="form-text text-danger" hidden>Introduzca un email
+                        válido</small>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="sr-only my-2">Password</label>
+                    <input type="password" class="form-control" placeholder="Contraseña" name="password" id="password"
+                        required />
+                    <small id="passwordHelp" class="form-text text-danger" hidden>Password obligatorio</small>
+                </div>
+                <div class="form-group">
+                    <label for="password2" class="sr-only my-2">Confirmar password</label>
+                    <input type="password" class="form-control" placeholder="Confirmar contraseña" name="password2"
+                        id="password2" required />
+                    <small id="password2Help" class="form-text text-danger" hidden>Las contraseñas no coinciden</small>
+                </div>
+                <div class="form-group mt-4">
+                    <button class="btn btn-lg btn-primary btn-block" id="btnRegistro" type="submit" disabled>
+                        Registrarse
+                    </button>
+                </div>
+            </form>
+            <p>¿Tiene cuenta? Inicie sesión <a href="index.html" aria-label="Pinchar aquí para iniciar sesión">aquí</a>
+            </p>
+
+        </div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCST-26kLZcTsORDuy_RcWZ6sHzWnfLWek",
+            authDomain: "chatjs-c7f6e.firebaseapp.com",
+            projectId: "chatjs-c7f6e",
+            storageBucket: "chatjs-c7f6e.appspot.com",
+            messagingSenderId: "346483363480",
+            appId: "1:346483363480:web:1715b3908063fdb8c38aed"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                location.href = 'chat.html';
+                const uid = user.uid;
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+
+        // Variables para controlar si el email y el password son válidos
+        let emailValido = false;
+        let passwordValido = false;
+        let password2Valido = false;
+
+        // Seleccionamos los elementos del formulario
+        const inputEmail = document.querySelector('#email');
+        const inputPassword = document.querySelector('#password');
+        const inputPassword2 = document.querySelector('#password2');
+        const formulario = document.querySelector('.form-signin');
+        const btnSubmit = document.querySelector('#btnRegistro');
+        const emailHelp = document.querySelector('#emailHelp');
+        const passwordHelp = document.querySelector('#passwordHelp');
+        const password2Help = document.querySelector('#password2Help');
+
+        const validarEmail = (e) => {
+            const vacio = estaVacio(e.target.value);
+            const emailOK = esEmail(e.target.value);
+            if (vacio || !emailOK) {
+                emailHelp.hidden = false;
+                emailHelp.textContent = 'Introduzca un email válido';
+                emailValido = false;
+            } else {
+                emailHelp.hidden = true;
+                emailHelp.textContent = '';
+                emailValido = true;
+            }
+            validarEnviar();
+        }
+
+        const validarPassword = (e) => {
+            const vacio = estaVacio(e.target.value);
+            if (vacio) {
+                passwordHelp.hidden = false;
+                passwordHelp.textContent = 'Password obligatorio';
+                passwordValido = false;
+            } else {
+                passwordHelp.hidden = true;
+                passwordHelp.textContent = '';
+                passwordValido = true;
+            }
+            validarEnviar();
+        }
+
+        const validarPassword2 = (e) => {
+            if (inputPassword2.value !== inputPassword.value) {
+                password2Help.hidden = false;
+                password2Valido = false;
+            } else {
+                password2Help.hidden = true;
+                password2Valido = true;
+            }
+            validarEnviar();
+        }
+
+        const estaVacio = (texto) => {
+            return texto.trim() === '';
+        }
+
+        const esEmail = (texto) => {
+            const regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+            const resultado = regex.test(texto);
+            return resultado;
+        }
+
+        const validarEnviar = () => {
+            if (emailValido && passwordValido && password2Valido) {
+                btnSubmit.disabled = false;
+            } else {
+                btnSubmit.disabled = true;
+            }
+        }
+
+        const register = async (e) => {
+            e.preventDefault();
+            try {
+                await createUserWithEmailAndPassword(auth, inputEmail.value, inputPassword.value);
+            } catch (error) {
+                console.log(error)
+                alert('Error en el registro');
+                // Mejora: Modal bootstrap
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            }
+        }
+
+        inputEmail.addEventListener('input', validarEmail);
+        inputPassword.addEventListener('input', validarPassword);
+        inputPassword2.addEventListener('input', validarPassword2);
+        formulario.addEventListener('submit', register);
+    </script>
+</body>
+
+</html>

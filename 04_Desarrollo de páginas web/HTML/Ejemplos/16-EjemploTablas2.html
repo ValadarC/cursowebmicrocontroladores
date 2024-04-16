@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Tablas con celdas combinadas</title>
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    <h1>Tablas con celdas combinadas</h1>
+    <h2>Tabla con colspan</h2>
+    <table aria-label="Factura" border="1">
+        <tr>
+            <th>Concepto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Total</th>
+        </tr>
+        <tr>
+            <td>Ordenador</td>
+            <td>2</td>
+            <td>500</td>
+            <td>1000</td>
+        </tr>
+        <tr>
+            <td>Impresora</td>
+            <td>3</td>
+            <td>100</td>
+            <td>300</td>
+        </tr>
+        <tr>
+            <td colspan="3">Total</td>
+            <td>1300</td>
+        </tr>
+    </table>
+    <h2>Tabla con rowspan</h2>
+    <table border="1" aria-label="Tabla de ventas">
+        <tr>
+            <th scope="row" rowspan="2">Ventas</th>
+            <th>Zona norte</th>
+            <td>1000</td>
+        </tr>
+        <tr>
+            <th>Zona sur</th>
+            <td>2000</td>
+        </tr>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<!--
+Parte 2
+    • Crear un botón junto al anterior que al pulsar cambie el texto del título y el orden de los divs de la primera fila.
+    • Crear otro botón que cambie el color de la letra a azul en todo el documento.
+    • Añadir un efecto de animación que se active al entrar con el ratón en la imagen y quitarlo al retirar el ratón de ella.
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        .azul {
+            color:blue;
+        }
+        .negro {
+            color:black;
+        }
+
+    </style>
+</head>
+
+<body>
+    <script>
+        //1º    ->Crear un H1 y meterlo en la Web
+        const h1 = document.createElement('h1');
+        h1.textContent = "¿Qué es BootStrap?";
+        h1.classList.add('display-1');
+        h1.classList.add('text-center');
+        document.body.appendChild(h1);
+
+        //2º    ->Crear un Div con la clase container
+        const divContainer = document.createElement('div');
+        divContainer.classList.add('container');
+        divContainer.classList.add('contenedor');
+        divContainer.classList.add('mt-5');
+        document.body.appendChild(divContainer);
+
+        //3º    ->Dentro del div anterior, crear un div de clase row
+        const divRow = document.createElement('div');
+        divRow.classList.add('row');
+        divContainer.appendChild(divRow);
+
+        //4º ->Dentro de divRow crear dos div de clase col-8 y col-4
+        const divCol8 = document.createElement('div');
+        divCol8.classList.add('col-8');
+        divRow.appendChild(divCol8);
+
+        const divCol4 = document.createElement('div');
+        divCol4.classList.add('col-4');
+        divRow.appendChild(divCol4);
+
+        //5º-> En el primer div, incluir un párrafo
+        const pCol8 = document.createElement('p');
+        pCol8.classList.add('layer');
+        pCol8.textContent = "Bootstrap is an HTML, CSS and JS library that focuses on simplifying the development of informative web pages (as opposed to web applications). The primary purpose of adding it to a web project is to apply Bootstrap's choices of color, size, font and layout to that project. As such, the primary factor is whether the developers in charge find those choices to their liking. Once added to a project, Bootstrap provides basic style definitions for all HTML elements. The result is a uniform appearance for prose, tables and form elements across web browsers. In addition, developers can take advantage of CSS classes defined in Bootstrap to further customize the appearance of their contents. For example, Bootstrap has provisioned for light- and dark-colored tables, page headings, more prominent pull quotes, and text with a highlight.";
+        divCol8.appendChild(pCol8);
+
+        //6º->  En la segunda una imagen responsive
+        const imgCol4 = document.createElement('img');
+        imgCol4.classList.add('img-fluid');
+        imgCol4.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/H%C3%A9mycicle_du_Parlement_europ%C3%A9en_%28Bruxelles%29.JPG/1920px-H%C3%A9mycicle_du_Parlement_europ%C3%A9en_%28Bruxelles%29.JPG";
+        imgCol4.alt = "el Parlamento europeo";
+        divCol4.appendChild(imgCol4);
+
+        //7º->  Crear un enlace con role button de la biblioteca bootstrap que lo lleve a ww.bootstrap.com
+        const aBootstrap = document.createElement('a');
+        aBootstrap.classList.add('btn');
+        aBootstrap.classList.add('btn-primary');
+        aBootstrap.role = "button";
+        aBootstrap.textContent = "Ir a Bootstrap";
+        aBootstrap.href = "https://getbootstrap.com/";
+        aBootstrap.target = "_blank";
+
+        divContainer.appendChild(aBootstrap);
+
+        //8º->  Crear un botón junto al anterior que al pulsar cambie el texto del título y el orden de los divs de la primera fila
+        const nuevoBoton = document.createElement('button');
+        nuevoBoton.classList.add('btn');
+        nuevoBoton.classList.add('btn-success');
+        nuevoBoton.textContent = "Cambia el título y posiciones columnas";
+        nuevoBoton.type='button';
+        divContainer.appendChild(nuevoBoton);
+
+        nuevoBoton.addEventListener('click', () => {
+            h1.textContent = "He cambiado el título de la página";
+            const primero = divRow.children[0];
+            const segundo = divRow.children[1];
+            primero.before(segundo);
+        });
+
+        //9º->  Resetea todo a como estaba antes
+        const resetBoton = document.createElement('button');
+        resetBoton.classList.add('btn');
+        resetBoton.classList.add('btn-warning');
+        resetBoton.textContent = "volver a poner todo en su sitio";
+        divContainer.appendChild(resetBoton);
+
+        resetBoton.addEventListener('click', () => {
+            h1.textContent = "¿Qué es BootStrap?";
+            document.body.classList.remove('azul');
+            
+            divCol4.remove();
+            divCol8.remove();
+            divRow.appendChild(divCol8);
+            divRow.appendChild(divCol4);
+        });
+
+        const azulBoton = document.createElement('button');
+        azulBoton.classList.add('btn');
+        azulBoton.classList.add('btn-info');
+        azulBoton.textContent = "Poner toda la web en azul";
+        divContainer.appendChild(azulBoton);
+
+        azulBoton.addEventListener('click', () => {
+            document.body.classList.add("azul");
+        });
+
+        imgCol4.addEventListener('mouseenter',()=>{
+            imgCol4.classList.add('animate__animated');
+            imgCol4.classList.add('animate__zoomOutUp');
+        });
+
+        imgCol4.addEventListener('mouseleave',()=>{
+            imgCol4.classList.remove('animate__animated');
+            imgCol4.classList.remove('animate__zoomOutUp');
+        });
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formularios y tablas | Bootstrap con Juan Luis</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/misEstilos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="icon" type="image/x-icon" href="./icons/favicon.png" />
+</head>
+
+<body>
+    <main class="container">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./index.html">
+                    <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo de Bootstrap"
+                        width="30" height="24" class="animate__animated animate__bounce"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Pulsa para ver opciones">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./imagenes.html">Imágenes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active negrita" aria-current="page" href="./tablasformularios.html">Tablas y formularios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./otros.html">Otros componentes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row">
+            <section class="col-md-6 col-xs-12">
+                <header class="mb-4 border-bottom">
+                    <h1 class="display-1">Formularios con Bootstrap</h1>
+                    <p>
+                        <a class="btn btn-outline-primary btn-lg"
+                            href="https://getbootstrap.com/docs/5.2/forms/overview/" target="_blank"
+                            role="button">Documentación de formularios en Bootstrap</a>
+                    </p>
+                </header>
+                <p class="lead">Los controles de formulario de Bootstrap amplían nuestros estilos de formulario
+                    reiniciados con clases. Use estas clases para optar por sus pantallas personalizadas para una
+                    representación más consistente en todos los navegadores y dispositivos. Aquí vemos un ejemplo de un
+                    formulario hecho con Bootstrap
+                </p>
+                <form>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" aria-label="Introduce tu email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" aria-label="Introduce tu contraseña">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="password2" aria-label="Introduce tu contraseña">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pago" class="form-label">Forma de pago</label>
+                        <select class="form-select" id="pago" aria-label="Selecciona tu forma de pago">
+                            <option selected>Elige una forma de pago</option>
+                            <option value="1">Tarjeta</option>
+                            <option value="2">Bizum</option>
+                            <option value="3">PayPal</option>
+                        </select>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="acuerdo">
+                        <label class="form-check-label" for="acuerdo">
+                            Estoy de acuerdo con las condiciones
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg">Enviar</button>
+                </form>
+            </section>
+            <section class="col-md-6 col-xs-12">
+                <header class="mb-4 border-bottom">
+                    <h1 class="display-1">Tablas con Bootstrap</h1>
+                    <p>
+                        <a class="btn btn-outline-primary btn-lg"
+                            href="https://getbootstrap.com/docs/5.2/content/tables/" target="_blank"
+                            role="button">Documentación de tablas en Bootstrap</a>
+                    </p>
+                </header>
+                <p class="lead">Solo tenemos que añadir la clase <code>.table-responsive</code> a una tabla para hacer
+                    que sea
+                    responsive. Con la clase <code>.table</code>, le damos el estilo básico de Bootstrap a la tabla.
+                </p>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Ciudad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Juan</td>
+                            <td>Pérez</td>
+                            <td>Pamplona</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Ana</td>
+                            <td>Sánchez</td>
+                            <td>Vitoria</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Marta</td>
+                            <td>Gómez</td>
+                            <td>Logroño</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <hr class="mt-4" />
+
+        <footer>&copy; Juan Luis Ochoa - 2024</footer>
+    </main>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

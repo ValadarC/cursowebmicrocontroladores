@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="RadoVT">
+    <title>Actividad 2 | Partes 1 y 2</title>
+    <style>
+        #avisoNombre {
+            color: red;
+        }
+
+        #avisoRegistro {
+            color: green;
+        }
+
+        #suma {
+            margin: 5px;
+            padding: 5px;
+            background: #CCC;
+            border: 1px #000 solid;
+            width: 100px;
+            height: 50px;
+            text-align: center;
+        }
+        input{
+            padding:5px 10px;
+        }
+        input[type=number]{
+            width: 117px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Parte 1-->
+    <h1>Regístrate</h1>
+    <form>
+        <label for="campoNombre">Nombre:</label>
+        <input type="text" placeholder="Nombre" id="campoNombre">
+        <span id="avisoNombre"></span><br>
+        <span id="avisoRegistro"></span>
+        <br>
+        <input type="button" id="botonRegistro" value="Registrarme">
+
+    </form>
+
+    <script>
+        const campoNombre = document.getElementById('campoNombre');
+        const botonRegistro = document.getElementById('botonRegistro');
+
+        campoNombre.addEventListener('focus', () => {
+            document.getElementById('avisoNombre').textContent = "Introduce tu nombre";
+            document.getElementById('avisoRegistro').textContent = "";
+        });
+
+        campoNombre.addEventListener('blur', () => {
+            document.getElementById('avisoNombre').textContent = "";
+        });
+
+
+        botonRegistro.addEventListener('click', () => {
+            document.getElementById('avisoNombre').textContent = "";
+            if (campoNombre.value != "") {
+                campoNombre.value = "";
+                document.getElementById('avisoRegistro').textContent = "Registrado con éxito!";
+            }
+        });
+    </script>
+
+    <!--Parte 2-->
+
+    <form style="margin-top: 50px;">
+        <div style="float:left">
+            <input type="number" placeholder="introduce un número" id="numero1"><br>
+            <input type="number" placeholder="introduce un número" id="numero2">
+        </div>
+        <div>
+            <span id="suma">Resultado</span>
+
+        </div><br><br><br>
+        <input type="button" id="botonSumar" onclick="sumar()" value="Sumar">
+        <input type="button" id="botonSumar" onclick="restar()" value="Restar">
+        <input type="button" id="botonSumar" onclick="multiplicar()" value="Multiplicar">
+        <input type="button" id="botonSumar" onclick="dividir()" value="Dividir">
+    </form>
+
+    <script>
+
+        function sumar() {
+            const numero1 = document.getElementById("numero1").value;
+            const numero2 = document.getElementById("numero2").value;
+            const suma = document.getElementById("suma");
+            const calculo = parseInt(numero1) + parseInt(numero2);
+            suma.innerHTML = "La suma es <b>" + calculo + "</b>";
+        }
+        function restar() {
+            const numero1 = document.getElementById("numero1").value;
+            const numero2 = document.getElementById("numero2").value;
+            const suma = document.getElementById("suma");
+            const calculo = parseInt(numero1) - parseInt(numero2);
+            suma.innerHTML = "La resta es <b>" + calculo + "</b>";
+        }
+        function multiplicar() {
+            const numero1 = document.getElementById("numero1").value;
+            const numero2 = document.getElementById("numero2").value;
+            const suma = document.getElementById("suma");
+            const calculo = parseInt(numero1) * parseInt(numero2);
+            suma.innerHTML = "La multiplicación es <b>" + calculo + "</b>";
+        }
+        function dividir() {
+            const numero1 = document.getElementById("numero1").value;
+            const numero2 = document.getElementById("numero2").value;
+            const suma = document.getElementById("suma");
+            const calculo = parseInt(numero1) / parseInt(numero2);
+            suma.innerHTML = "La división es <b>" + calculo + "</b>";
+        }
+
+
+    </script>
+</body>
+
+</html>

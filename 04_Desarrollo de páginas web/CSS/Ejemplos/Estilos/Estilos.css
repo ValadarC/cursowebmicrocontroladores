@@ -1,0 +1,15 @@
+﻿body {
+  background: black;
+}
+
+h1 {
+  color: yellow;
+  font-family: Calibri;
+  font-size: xx-large;
+}
+
+p {
+  color: white;
+  font-family: Calibri;
+  font-size: medium;
+}
